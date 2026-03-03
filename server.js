@@ -21,7 +21,7 @@ const pool = new Pool({
 });
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "passenger-login.html"));
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 // ================= REGISTER =================
