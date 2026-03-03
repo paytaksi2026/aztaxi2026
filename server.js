@@ -17,6 +17,21 @@ app.get("/", (req, res) => {
   res.send("AZTaxi backend işləyir 🚖");
 });
 
+app.get("/test-register", async (req, res) => {
+  try {
+    const hashed = await require("bcrypt").hash("123456", 10);
+
+    const result = await pool.query(
+      "INSERT INTO users (name, phone, password, role) VALUES ($1,$2,$3,'passenger') RETURNING id,name,phone,role",
+      ["TestUser", "0500000000", hashed]
+    );
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    res.json({ error: err.message });
+  }
+});
+
 // TEST DB CONNECTION
 app.get("/db-test", async (req, res) => {
   try {
