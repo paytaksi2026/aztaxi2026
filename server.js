@@ -27,6 +27,31 @@ app.get("/db-test", async (req, res) => {
   }
 });
 
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
+app.post("/api/register/passenger", async (req, res) => {
+  try {
+    const { name, phone, password } = req.body;
+
+    if (!name || !phone || !password) {
+      return res.status(400).json({ error: "Bütün xanalar doldurulmalıdır" });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const result = await pool.query(
+      "INSERT INTO users (name, phone, password, role) VALUES ($1,$2,$3,'passenger') RETURNING id,name,phone,role",
+      [name, phone, hashedPassword]
+    );
+
+    res.json({ success: true, user: result.rows[0] });
+
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
