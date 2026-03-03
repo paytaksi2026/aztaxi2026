@@ -83,6 +83,30 @@ app.post("/api/register/passenger", async (req, res) => {
       [name, phone, hashedPassword]
     );
 
+    app.get("/test-driver-register", async (req, res) => {
+  try {
+    const bcrypt = require("bcrypt");
+
+    const hashedPassword = await bcrypt.hash("123456", 10);
+
+    const userResult = await pool.query(
+      "INSERT INTO users (name, phone, password, role) VALUES ($1,$2,$3,'driver') RETURNING id,name,phone,role",
+      ["DriverTest", "0508887766", hashedPassword]
+    );
+
+    const userId = userResult.rows[0].id;
+
+    await pool.query(
+      "INSERT INTO driver_profiles (user_id, car_brand, car_model, car_color, car_plate) VALUES ($1,$2,$3,$4,$5)",
+      [userId, "Toyota", "Prius", "Ağ", "90-AA-777"]
+    );
+
+    res.json(userResult.rows[0]);
+  } catch (err) {
+    res.json({ error: err.message });
+  }
+});
+
     const userId = userResult.rows[0].id;
 
     await pool.query(
