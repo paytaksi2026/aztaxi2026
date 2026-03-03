@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>AZTaxi Login</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="card">
+<h2>Login</h2>
+<div style="display:flex; gap:5px;">
+<input value="+994" readonly style="width:70px;">
+<select id="operator">
+<option value="50">50</option>
+<option value="51">51</option>
+<option value="55">55</option>
+<option value="70">70</option>
+<option value="77">77</option>
+<option value="99">99</option>
+</select>
+<input type="text" id="number" maxlength="7" placeholder="XXXXXXX">
+</div>
+<input type="password" id="password" placeholder="Şifrə">
+<button onclick="login()">Daxil ol</button>
+<p id="msg"></p>
+</div>
+<script>
+async function login(){
+const operator=document.getElementById("operator").value;
+const number=document.getElementById("number").value;
+const password=document.getElementById("password").value;
+const phone="+994"+operator+number;
+const res=await fetch("/api/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({phone,password})});
+const data=await res.json();
+if(data.token){localStorage.setItem("token",data.token);window.location.href="/dashboard.html";}
+else{document.getElementById("msg").innerText=data.error;}
+}
+</script>
+</body>
+</html>
