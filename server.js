@@ -60,6 +60,43 @@ app.post("/api/register/passenger", async (req, res) => {
       [name, phone, hashedPassword]
     );
 
+    app.post("/api/register/driver", async (req, res) => {
+  try {
+    const {
+      name,
+      phone,
+      password,
+      car_brand,
+      car_model,
+      car_color,
+      car_plate
+    } = req.body;
+
+    if (!name || !phone || !password || !car_brand || !car_model || !car_color || !car_plate) {
+      return res.status(400).json({ error: "Bütün xanalar doldurulmalıdır" });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const userResult = await pool.query(
+      "INSERT INTO users (name, phone, password, role) VALUES ($1,$2,$3,'driver') RETURNING id,name,phone,role",
+      [name, phone, hashedPassword]
+    );
+
+    const userId = userResult.rows[0].id;
+
+    await pool.query(
+      "INSERT INTO driver_profiles (user_id, car_brand, car_model, car_color, car_plate) VALUES ($1,$2,$3,$4,$5)",
+      [userId, car_brand, car_model, car_color, car_plate]
+    );
+
+    res.json({ success: true, user: userResult.rows[0] });
+
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
     res.json({ success: true, user: result.rows[0] });
 
   } catch (err) {
