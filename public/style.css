@@ -1,5 +1,40 @@
-body{font-family:Arial;background:linear-gradient(135deg,#1e3c72,#2a5298);display:flex;justify-content:center;align-items:center;height:100vh;margin:0;}
-.card{background:white;padding:30px;border-radius:10px;width:340px;box-shadow:0 10px 20px rgba(0,0,0,0.2);}
-input,select{width:100%;padding:8px;margin:6px 0;border-radius:6px;border:1px solid #ccc;}
-button{width:100%;padding:10px;background:#2a5298;color:white;border:none;border-radius:6px;cursor:pointer;}
-button:hover{background:#1e3c72;}
+body{
+font-family:Arial;
+background:linear-gradient(135deg,#1e3c72,#2a5298);
+margin:0;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+color:white;
+}
+.container{text-align:center;}
+.card-wrapper{
+display:flex;
+gap:30px;
+margin-top:30px;
+}
+.card{
+background:white;
+color:black;
+padding:30px;
+border-radius:12px;
+width:220px;
+box-shadow:0 10px 20px rgba(0,0,0,0.2);
+}
+button{
+width:100%;
+padding:10px;
+margin-top:10px;
+background:#2a5298;
+color:white;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
+button.secondary{
+background:#555;
+}
+button:hover{
+opacity:0.9;
+}
