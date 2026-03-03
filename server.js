@@ -4,6 +4,7 @@ const cors = require("cors");
 const { Pool } = require("pg");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const path = require("path");
 
 const app = express();
 
@@ -11,22 +12,16 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// ===== STATIC FILES =====
+app.use(express.static(path.join(__dirname, "public")));
+
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: { rejectUnauthorized: false }
 });
 
 app.get("/", (req, res) => {
-  res.send("AZTaxi backend işləyir 🚖");
-});
-
-app.get("/db-test", async (req, res) => {
-  try {
-    const result = await pool.query("SELECT NOW()");
-    res.json({ success: true, time: result.rows[0] });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+  res.sendFile(path.join(__dirname, "public", "passenger-login.html"));
 });
 
 // ================= REGISTER =================
@@ -34,10 +29,6 @@ app.get("/db-test", async (req, res) => {
 app.post("/api/register/passenger", async (req, res) => {
   try {
     const { name, phone, password } = req.body;
-
-    if (!name || !phone || !password) {
-      return res.status(400).json({ error: "Bütün xanalar doldurulmalıdır" });
-    }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -47,7 +38,6 @@ app.post("/api/register/passenger", async (req, res) => {
     );
 
     res.json({ success: true, user: result.rows[0] });
-
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -65,10 +55,6 @@ app.post("/api/register/driver", async (req, res) => {
       car_plate
     } = req.body;
 
-    if (!name || !phone || !password || !car_brand || !car_model || !car_color || !car_plate) {
-      return res.status(400).json({ error: "Bütün xanalar doldurulmalıdır" });
-    }
-
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const userResult = await pool.query(
@@ -84,7 +70,6 @@ app.post("/api/register/driver", async (req, res) => {
     );
 
     res.json({ success: true, user: userResult.rows[0] });
-
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -95,10 +80,6 @@ app.post("/api/register/driver", async (req, res) => {
 app.post("/api/login", async (req, res) => {
   try {
     const { phone, password } = req.body;
-
-    if (!phone || !password) {
-      return res.status(400).json({ error: "Telefon və şifrə lazımdır" });
-    }
 
     const userResult = await pool.query(
       "SELECT * FROM users WHERE phone = $1",
@@ -133,13 +114,12 @@ app.post("/api/login", async (req, res) => {
         role: user.role
       }
     });
-
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-// ================= AUTH MIDDLEWARE =================
+// ================= AUTH =================
 
 function authenticateToken(req, res, next) {
   const authHeader = req.headers["authorization"];
