@@ -2,8 +2,11 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const { Pool } = require("pg");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const app = express();
+
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -17,22 +20,6 @@ app.get("/", (req, res) => {
   res.send("AZTaxi backend işləyir 🚖");
 });
 
-app.get("/test-register", async (req, res) => {
-  try {
-    const hashed = await require("bcrypt").hash("123456", 10);
-
-    const result = await pool.query(
-      "INSERT INTO users (name, phone, password, role) VALUES ($1,$2,$3,'passenger') RETURNING id,name,phone,role",
-      ["TestUser", "0500000000", hashed]
-    );
-
-    res.json(result.rows[0]);
-  } catch (err) {
-    res.json({ error: err.message });
-  }
-});
-
-// TEST DB CONNECTION
 app.get("/db-test", async (req, res) => {
   try {
     const result = await pool.query("SELECT NOW()");
@@ -42,8 +29,7 @@ app.get("/db-test", async (req, res) => {
   }
 });
 
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+/* ================= PASSENGER REGISTER ================= */
 
 app.post("/api/register/passenger", async (req, res) => {
   try {
@@ -60,7 +46,16 @@ app.post("/api/register/passenger", async (req, res) => {
       [name, phone, hashedPassword]
     );
 
-    app.post("/api/register/driver", async (req, res) => {
+    res.json({ success: true, user: result.rows[0] });
+
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+/* ================= DRIVER REGISTER ================= */
+
+app.post("/api/register/driver", async (req, res) => {
   try {
     const {
       name,
@@ -83,30 +78,6 @@ app.post("/api/register/passenger", async (req, res) => {
       [name, phone, hashedPassword]
     );
 
-    app.get("/test-driver-register", async (req, res) => {
-  try {
-    const bcrypt = require("bcrypt");
-
-    const hashedPassword = await bcrypt.hash("123456", 10);
-
-    const userResult = await pool.query(
-      "INSERT INTO users (name, phone, password, role) VALUES ($1,$2,$3,'driver') RETURNING id,name,phone,role",
-      ["DriverTest", "0508887766", hashedPassword]
-    );
-
-    const userId = userResult.rows[0].id;
-
-    await pool.query(
-      "INSERT INTO driver_profiles (user_id, car_brand, car_model, car_color, car_plate) VALUES ($1,$2,$3,$4,$5)",
-      [userId, "Toyota", "Prius", "Ağ", "90-AA-777"]
-    );
-
-    res.json(userResult.rows[0]);
-  } catch (err) {
-    res.json({ error: err.message });
-  }
-});
-
     const userId = userResult.rows[0].id;
 
     await pool.query(
@@ -121,10 +92,42 @@ app.post("/api/register/passenger", async (req, res) => {
   }
 });
 
-    res.json({ success: true, user: result.rows[0] });
+/* ================= TEST ROUTES ================= */
 
+app.get("/test-register", async (req, res) => {
+  try {
+    const hashed = await bcrypt.hash("123456", 10);
+
+    const result = await pool.query(
+      "INSERT INTO users (name, phone, password, role) VALUES ($1,$2,$3,'passenger') RETURNING id,name,phone,role",
+      ["TestUser2", "0500000002", hashed]
+    );
+
+    res.json(result.rows[0]);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.json({ error: err.message });
+  }
+});
+
+app.get("/test-driver-register", async (req, res) => {
+  try {
+    const hashedPassword = await bcrypt.hash("123456", 10);
+
+    const userResult = await pool.query(
+      "INSERT INTO users (name, phone, password, role) VALUES ($1,$2,$3,'driver') RETURNING id,name,phone,role",
+      ["DriverTest2", "0508887767", hashedPassword]
+    );
+
+    const userId = userResult.rows[0].id;
+
+    await pool.query(
+      "INSERT INTO driver_profiles (user_id, car_brand, car_model, car_color, car_plate) VALUES ($1,$2,$3,$4,$5)",
+      [userId, "Toyota", "Prius", "Ağ", "90-AA-888"]
+    );
+
+    res.json(userResult.rows[0]);
+  } catch (err) {
+    res.json({ error: err.message });
   }
 });
 
