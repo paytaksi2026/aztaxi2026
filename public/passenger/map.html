@@ -1,24 +1,25 @@
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8"/>
 <title>AZTAXI Passenger Map</title>
+
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 <link rel="stylesheet" href="/css/map.css"/>
+
 </head>
 <body>
 
-<h2>Passenger Map</h2>
-
-<div id="controls">
+<div id="topbar">
 <input id="from" placeholder="Haradan"/>
 <input id="to" placeholder="Haraya"/>
-<button onclick="calcRoute()">Marşrutu göstər</button>
+<button onclick="calcRoute()">Sifariş üçün hesabla</button>
 </div>
 
 <div id="map"></div>
 
-<div id="info">
+<div id="infoCard">
 Mesafə: <span id="distance">-</span> km |
 Təxmini qiymət: <span id="price">-</span> AZN
 </div>
