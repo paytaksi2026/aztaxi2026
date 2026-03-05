@@ -1,0 +1,101 @@
+
+body{
+margin:0;
+font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto;
+background:#f4f6f9;
+}
+
+/* TOP BAR */
+
+.topbar{
+height:60px;
+background:white;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 25px;
+box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+
+.logo{
+font-weight:700;
+font-size:18px;
+}
+
+.driver-info span{
+margin-left:20px;
+font-weight:600;
+}
+
+.status{
+padding:4px 10px;
+border-radius:8px;
+font-size:12px;
+}
+
+.offline{
+background:#ffe5e5;
+color:#b30000;
+}
+
+/* MAIN */
+
+.main{
+display:flex;
+justify-content:center;
+margin-top:30px;
+gap:25px;
+}
+
+/* MAP */
+
+.map-container{
+background:white;
+padding:10px;
+border-radius:14px;
+box-shadow:0 10px 25px rgba(0,0,0,0.15);
+}
+
+#map{
+width:700px;
+height:450px;
+border-radius:10px;
+}
+
+/* PANEL */
+
+.ride-panel{
+width:260px;
+background:white;
+padding:20px;
+border-radius:14px;
+box-shadow:0 10px 25px rgba(0,0,0,0.15);
+}
+
+.ride-panel h3{
+margin-top:0;
+}
+
+.ride-panel input{
+width:100%;
+padding:10px;
+margin-bottom:10px;
+border:1px solid #ddd;
+border-radius:8px;
+}
+
+.ride-panel button{
+width:100%;
+padding:10px;
+background:#000;
+color:white;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-weight:600;
+}
+
+.ride-info{
+margin-top:15px;
+font-size:14px;
+}
