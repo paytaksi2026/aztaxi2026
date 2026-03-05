@@ -3,21 +3,30 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Passenger</title>
-<link rel="stylesheet" href="style.css">
+<title>AZTAXI Passenger</title>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<link rel="stylesheet" href="css/style.css">
+
 </head>
 <body>
 
-<div class="map"></div>
+<div id="map"></div>
 
 <div class="panel">
-<input placeholder="Haradan">
-<input placeholder="Haraya">
 
-<div class="price">Qiymət: 3.50 AZN</div>
+<input id="from" placeholder="Haradan">
+<input id="to" placeholder="Haraya">
 
-<button class="order">Sifariş ver</button>
+<div id="distance">Mesafə: -</div>
+<div id="price">Qiymət: -</div>
+
+<button onclick="createOrder()">Sifariş ver</button>
+
 </div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="js/passenger.js"></script>
 
 </body>
 </html>
