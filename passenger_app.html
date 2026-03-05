@@ -4,13 +4,31 @@
 <head>
 <meta charset="utf-8"/>
 <title>AzTaxi Passenger</title>
+
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <style>
-body{margin:0;background:#0b0b0b;color:white;font-family:sans-serif}
-#map{height:90vh}
-button{width:100%;padding:15px;background:#FFD600;border:0;font-size:18px}
+body{
+ margin:0;
+ font-family:Arial;
+ background:#0b0b0b;
+ color:white;
+}
+
+#map{
+ height:90vh;
+}
+
+button{
+ width:100%;
+ padding:18px;
+ background:#FFD600;
+ border:0;
+ font-size:18px;
+ font-weight:bold;
+}
 </style>
 </head>
+
 <body>
 
 <div id="map"></div>
@@ -20,32 +38,79 @@ button{width:100%;padding:15px;background:#FFD600;border:0;font-size:18px}
 <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 
 <script>
+
+const SERVER = "https://aztaxi.onrender.com";
+
 const map = L.map('map').setView([40.4093,49.8671],13);
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+ maxZoom:19
+}).addTo(map);
 
-let marker;
+let pickupMarker;
+let pickup;
 
-map.on("click", e=>{
- if(marker) map.removeLayer(marker);
- marker = L.marker(e.latlng).addTo(map);
- window.pickup=e.latlng;
+const driverMarkers = {};
+
+map.on("click", function(e){
+
+ if(pickupMarker){
+   map.removeLayer(pickupMarker);
+ }
+
+ pickupMarker = L.marker(e.latlng).addTo(map);
+ pickup = e.latlng;
+
 });
 
-const socket = io("https://aztaxi.onrender.com");
+const socket = io(SERVER);
+
+socket.on("drivers:update", function(drivers){
+
+ for(let id in drivers){
+
+   const d = drivers[id];
+
+   if(driverMarkers[id]){
+
+      driverMarkers[id].setLatLng([d.lat,d.lng]);
+
+   }else{
+
+      driverMarkers[id] = L.marker([d.lat,d.lng],{
+        title:"Driver"
+      }).addTo(map);
+
+   }
+
+ }
+
+});
+
 
 function requestRide(){
- if(!pickup){alert("Xəritədə pickup seç");return;}
- fetch("https://aztaxi.onrender.com/ride/request",{
-  method:"POST",
-  headers:{"Content-Type":"application/json"},
-  body:JSON.stringify({
-   passengerId:"p1",
-   pickupLat:pickup.lat,
-   pickupLng:pickup.lng
-  })
+
+ if(!pickup){
+   alert("Xəritədə pickup seç!");
+   return;
+ }
+
+ fetch(SERVER + "/ride/request",{
+   method:"POST",
+   headers:{
+     "Content-Type":"application/json"
+   },
+   body:JSON.stringify({
+     passengerId:"p1",
+     pickupLat:pickup.lat,
+     pickupLng:pickup.lng
+   })
  });
+
+ alert("Ride göndərildi");
+
 }
+
 </script>
 
 </body>
