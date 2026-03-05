@@ -32,11 +32,11 @@ map.on("click", e=>{
  window.pickup=e.latlng;
 });
 
-const socket = io("http://localhost:3000");
+const socket = io("https://aztaxi.onrender.com");
 
 function requestRide(){
  if(!pickup){alert("Xəritədə pickup seç");return;}
- fetch("http://localhost:3000/ride/request",{
+ fetch("https://aztaxi.onrender.com/ride/request",{
   method:"POST",
   headers:{"Content-Type":"application/json"},
   body:JSON.stringify({
