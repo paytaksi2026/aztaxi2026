@@ -1,16 +1,41 @@
 
-const express = require('express');
-const path = require('path');
-const app = express();
+const express = require("express")
+const http = require("http")
+const { Server } = require("socket.io")
+const path = require("path")
 
-app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+const app = express()
+const server = http.createServer(app)
+const io = new Server(server)
 
-app.get('/', (req,res)=>{
-  res.sendFile(path.join(__dirname,'public','index.html'));
-});
+app.use(express.static(path.join(__dirname,"public")))
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT,()=>{
-  console.log("Server running on port " + PORT);
-});
+let drivers = {}
+
+io.on("connection",(socket)=>{
+
+socket.on("driver-location",(data)=>{
+drivers[socket.id] = data
+io.emit("drivers-update",drivers)
+})
+
+socket.on("new-order",(order)=>{
+io.emit("driver-new-order",order)
+})
+
+socket.on("driver-accept",(data)=>{
+io.emit("order-accepted",data)
+})
+
+socket.on("disconnect",()=>{
+delete drivers[socket.id]
+io.emit("drivers-update",drivers)
+})
+
+})
+
+const PORT = process.env.PORT || 3000
+
+server.listen(PORT,()=>{
+console.log("Server running on "+PORT)
+})
