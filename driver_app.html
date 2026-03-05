@@ -21,13 +21,13 @@ body{margin:0;background:#0b0b0b;color:white;font-family:sans-serif}
 const map = L.map('map').setView([40.4093,49.8671],13);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
-const socket = io("http://localhost:3000");
+const socket = io("https://aztaxi.onrender.com");
 
 navigator.geolocation.watchPosition(pos=>{
  const lat=pos.coords.latitude;
  const lng=pos.coords.longitude;
 
- fetch("http://localhost:3000/driver/location",{
+ fetch("https://aztaxi.onrender.com/driver/location",{
   method:"POST",
   headers:{"Content-Type":"application/json"},
   body:JSON.stringify({
