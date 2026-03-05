@@ -1,3 +1,4 @@
+
 const express = require("express");
 const path = require("path");
 const { Pool } = require("pg");
@@ -15,7 +16,7 @@ const pool = new Pool({
   ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false,
 });
 
-// PUBLIC qovluğunu statik açır
+// Serve entire public folder (css/js/img)
 app.use(express.static(path.join(__dirname, "public")));
 
 // Panel routes
