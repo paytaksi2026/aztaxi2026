@@ -1,0 +1,38 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="/css/style.css">
+<title>Admin</title>
+</head>
+
+<body>
+
+<h2>Admin Panel</h2>
+
+<div id="orders"></div>
+
+<script>
+fetch("/api/orders")
+.then(r=>r.json())
+.then(data=>{
+
+let html=""
+
+data.forEach(o=>{
+html+=`<div>
+Pickup: ${o.pickup} <br>
+Destination: ${o.destination} <br>
+Price: ${o.price} AZN
+<hr>
+</div>`
+})
+
+document.getElementById("orders").innerHTML=html
+
+})
+</script>
+
+</body>
+</html>
