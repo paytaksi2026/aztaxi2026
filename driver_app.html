@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>AzTaxi Driver</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<style>
+body{margin:0;background:#0b0b0b;color:white;font-family:sans-serif}
+#map{height:100vh}
+</style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+
+<script>
+const map = L.map('map').setView([40.4093,49.8671],13);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+const socket = io("http://localhost:3000");
+
+navigator.geolocation.watchPosition(pos=>{
+ const lat=pos.coords.latitude;
+ const lng=pos.coords.longitude;
+
+ fetch("http://localhost:3000/driver/location",{
+  method:"POST",
+  headers:{"Content-Type":"application/json"},
+  body:JSON.stringify({
+   driverId:"d1",
+   lat:lat,
+   lng:lng
+  })
+ });
+});
+
+socket.on("ride:new",ride=>{
+ alert("Yeni ride var!");
+ socket.emit("ride:accept",{rideId:ride.rideId,driverId:"d1"});
+});
+</script>
+
+</body>
+</html>
