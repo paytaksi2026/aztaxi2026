@@ -10,16 +10,13 @@ height:60vh;
 
 .panel{
 padding:20px;
+background:#111;
+color:white;
 }
 
-.panel input{
-width:100%;
-padding:10px;
-margin:5px 0;
-}
-
-.panel button{
+button{
 width:100%;
 padding:15px;
 font-size:18px;
+margin-top:10px;
 }
