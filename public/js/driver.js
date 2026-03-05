@@ -1,20 +1,15 @@
 
-let map = L.map('map').setView([40.4093, 49.8671], 13)
+const socket = io()
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map)
+let map = L.map("map").setView([40.4093,49.8671],13)
 
-let orderKm = localStorage.getItem("order_km")
-let orderPrice = localStorage.getItem("order_price")
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map)
 
-if(orderKm){
+navigator.geolocation.watchPosition((pos)=>{
 
-document.getElementById("orderInfo").innerHTML =
-"Mesafə: "+Number(orderKm).toFixed(2)+" km <br> Qiymət: "+Number(orderPrice).toFixed(2)+" AZN"
+let lat = pos.coords.latitude
+let lng = pos.coords.longitude
 
-}
+socket.emit("driver-location",{lat,lng})
 
-function acceptRide(){
-
-alert("Ride başladı")
-
-}
+})

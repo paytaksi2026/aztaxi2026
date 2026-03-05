@@ -1,43 +1,42 @@
 
-let map = L.map('map').setView([40.4093, 49.8671], 13)
+const socket = io()
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map)
+let map = L.map("map").setView([40.4093,49.8671],13)
 
-let marker
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map)
 
-map.on('click', function(e){
+let markers = {}
 
-if(marker){
-map.removeLayer(marker)
+socket.on("drivers-update",(drivers)=>{
+
+Object.values(markers).forEach(m=>map.removeLayer(m))
+markers = {}
+
+for(let id in drivers){
+
+let d = drivers[id]
+
+let marker = L.marker([d.lat,d.lng]).addTo(map)
+
+markers[id] = marker
+
 }
-
-marker = L.marker(e.latlng).addTo(map)
 
 })
 
-function calculatePrice(km){
-
-if(km<=3){
-return 3.5
-}
-
-return 3.5 + ((km-3)*0.30)
-
-}
-
-function createOrder(){
+function orderRide(){
 
 let km = Math.random()*10
 
-let price = calculatePrice(km)
+let price = 3.5
 
-document.getElementById("distance").innerHTML = "Mesafə: "+km.toFixed(2)+" km"
+if(km>3){
+price = 3.5 + (km-3)*0.30
+}
 
-document.getElementById("price").innerHTML = "Qiymət: "+price.toFixed(2)+" AZN"
+document.getElementById("price").innerHTML =
+"Qiymət: "+price.toFixed(2)+" AZN"
 
-localStorage.setItem("order_km",km)
-localStorage.setItem("order_price",price)
-
-alert("Driver axtarılır...")
+alert("Driver axtarılır")
 
 }
