@@ -6,40 +6,85 @@
 <title>AzTaxi Passenger</title>
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
 <style>
+
 body{
  margin:0;
  font-family:Arial;
- background:#0b0b0b;
+ background:#0B0B0B;
  color:white;
 }
 
 #map{
- height:90vh;
+ height:100vh;
+}
+
+.panel{
+ position:absolute;
+ bottom:0;
+ left:0;
+ width:100%;
+ background:#1A1A1A;
+ border-top-left-radius:20px;
+ border-top-right-radius:20px;
+ padding:20px;
+ box-shadow:0 -4px 10px rgba(0,0,0,0.5);
+}
+
+input{
+ width:100%;
+ padding:12px;
+ margin-top:8px;
+ border-radius:8px;
+ border:none;
+ background:#2a2a2a;
+ color:white;
+}
+
+.price{
+ margin-top:10px;
+ font-size:16px;
 }
 
 button{
+ margin-top:10px;
  width:100%;
- padding:18px;
+ padding:15px;
  background:#FFD600;
- border:0;
+ border:none;
+ border-radius:10px;
  font-size:18px;
  font-weight:bold;
 }
+
 </style>
 </head>
 
 <body>
 
 <div id="map"></div>
-<button onclick="requestRide()">Ride çağır</button>
+
+<div class="panel">
+
+<label>Pickup</label>
+<input id="pickup" placeholder="Xəritədən seç"/>
+
+<label>Destination</label>
+<input id="destination" placeholder="Ünvan yaz"/>
+
+<div class="price" id="price">
+Distance: - km<br>
+Price: - AZN
+</div>
+
+<button onclick="ride()">Ride çağır</button>
+
+</div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 
 <script>
-
-const SERVER = "https://aztaxi.onrender.com";
 
 const map = L.map('map').setView([40.4093,49.8671],13);
 
@@ -48,67 +93,51 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
 }).addTo(map);
 
 let pickupMarker;
+let destMarker;
 let pickup;
-
-const driverMarkers = {};
+let destination;
 
 map.on("click", function(e){
 
- if(pickupMarker){
-   map.removeLayer(pickupMarker);
+ if(!pickup){
+   pickup=e.latlng;
+   pickupMarker=L.marker(e.latlng).addTo(map);
+   document.getElementById("pickup").value=e.latlng.lat.toFixed(5)+","+e.latlng.lng.toFixed(5);
  }
+ else{
+   destination=e.latlng;
 
- pickupMarker = L.marker(e.latlng).addTo(map);
- pickup = e.latlng;
-
-});
-
-const socket = io(SERVER);
-
-socket.on("drivers:update", function(drivers){
-
- for(let id in drivers){
-
-   const d = drivers[id];
-
-   if(driverMarkers[id]){
-
-      driverMarkers[id].setLatLng([d.lat,d.lng]);
-
-   }else{
-
-      driverMarkers[id] = L.marker([d.lat,d.lng],{
-        title:"Driver"
-      }).addTo(map);
-
+   if(destMarker){
+      map.removeLayer(destMarker);
    }
 
+   destMarker=L.marker(e.latlng).addTo(map);
+
+   document.getElementById("destination").value=e.latlng.lat.toFixed(5)+","+e.latlng.lng.toFixed(5);
+
+   calculate();
  }
 
 });
 
+function calculate(){
 
-function requestRide(){
+ if(!pickup || !destination) return;
 
- if(!pickup){
-   alert("Xəritədə pickup seç!");
-   return;
- }
+ const dx=pickup.lat-destination.lat;
+ const dy=pickup.lng-destination.lng;
 
- fetch(SERVER + "/ride/request",{
-   method:"POST",
-   headers:{
-     "Content-Type":"application/json"
-   },
-   body:JSON.stringify({
-     passengerId:"p1",
-     pickupLat:pickup.lat,
-     pickupLng:pickup.lng
-   })
- });
+ const distance=Math.sqrt(dx*dx+dy*dy)*111;
 
- alert("Ride göndərildi");
+ const price=(2 + distance*0.8).toFixed(2);
 
+ document.getElementById("price").innerHTML=
+ "Distance: "+distance.toFixed(2)+" km<br>Price: "+price+" AZN";
+
+}
+
+function ride(){
+ alert("Ride request göndərildi (demo)");
 }
 
 </script>
