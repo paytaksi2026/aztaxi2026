@@ -1,45 +1,39 @@
 
-const socket = io()
+const socket=io()
 
-let map = L.map('map').setView([40.4093,49.8671],13)
+let map=L.map("map").setView([40.4093,49.8671],13)
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map)
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map)
 
-let markers = {}
+let markers={}
 
 socket.on("drivers-update",(drivers)=>{
 
 Object.values(markers).forEach(m=>map.removeLayer(m))
-markers = {}
+markers={}
 
 for(let id in drivers){
-
-let d = drivers[id]
-
-let marker = L.marker([d.lat,d.lng]).addTo(map)
-
-markers[id] = marker
-
+let d=drivers[id]
+markers[id]=L.marker([d.lat,d.lng]).addTo(map)
 }
 
 })
 
 function orderRide(){
 
-let km = Math.random()*10
+let pickup=document.getElementById("pickup").value
+let dest=document.getElementById("destination").value
 
-let price = 3.5
+let km=Math.random()*10
 
-if(km>3){
-price = 3.5 + (km-3)*0.30
-}
+let price=3.5
+if(km>3) price=3.5+(km-3)*0.30
 
-document.getElementById("price").innerHTML =
-"Qiymət: "+price.toFixed(2)+" AZN"
+document.getElementById("price").innerHTML="Qiymət: "+price.toFixed(2)+" AZN"
 
 socket.emit("new-order",{
-pickup:"Passenger location",
-destination:"Destination",
+pickup:pickup,
+destination:dest,
 distance:km.toFixed(2),
 price:price.toFixed(2)
 })
