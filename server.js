@@ -9,6 +9,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 
 const app = express();
+app.use(express.static(__dirname));
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: { origin: "*" }
