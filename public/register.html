@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>AzTaxi Register</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="box">
+
+<h2>Qeydiyyat</h2>
+
+<input id="name" placeholder="Ad">
+<input id="phone" placeholder="Telefon">
+<input id="password" placeholder="Şifrə">
+
+<select id="role">
+<option value="passenger">Sərnişin</option>
+<option value="driver">Sürücü</option>
+</select>
+
+<button onclick="register()">Qeydiyyat</button>
+
+</div>
+
+<script>
+
+async function register(){
+
+ const r = await fetch("/api/register",{
+  method:"POST",
+  headers:{"Content-Type":"application/json"},
+  body:JSON.stringify({
+   name:name.value,
+   phone:phone.value,
+   password:password.value,
+   role:role.value
+  })
+ })
+
+ const data=await r.json()
+
+ alert("Qeydiyyat tamamlandı")
+
+ location="login.html"
+
+}
+
+</script>
+
+</body>
+</html>

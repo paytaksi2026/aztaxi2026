@@ -2,25 +2,44 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Login</title>
-<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+<title>AzTaxi Login</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h2>Login</h2>
+<div class="box">
 
-<input id="name" placeholder="name">
-<button onclick="login()">Login</button>
+<h2>Daxil ol</h2>
+
+<input id="phone" placeholder="Telefon">
+<input id="password" placeholder="Şifrə">
+
+<button onclick="login()">Daxil ol</button>
+
+</div>
 
 <script>
 
-const socket=io()
+async function login(){
 
-function login(){
+ const r=await fetch("/api/login",{
+  method:"POST",
+  headers:{"Content-Type":"application/json"},
+  body:JSON.stringify({
+   phone:phone.value,
+   password:password.value
+  })
+ })
 
- socket.emit("login",{name:document.getElementById("name").value})
+ const user=await r.json()
 
- alert("Logged")
+ localStorage.userId=user.id
+
+ if(user.role==="driver"){
+  location="driver_profile.html"
+ }else{
+  location="passenger.html"
+ }
 
 }
 

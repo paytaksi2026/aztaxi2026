@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Driver Profile</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="box">
+
+<h2>Avtomobil məlumatları</h2>
+
+<input id="model" placeholder="Avtomobil modeli">
+<input id="plate" placeholder="Nömrə">
+<input id="color" placeholder="Rəng">
+
+<button onclick="save()">Yadda saxla</button>
+
+</div>
+
+<script>
+
+async function save(){
+
+ const r=await fetch("/api/driver",{
+  method:"POST",
+  headers:{"Content-Type":"application/json"},
+  body:JSON.stringify({
+   userId:localStorage.userId,
+   carModel:model.value,
+   plate:plate.value,
+   carColor:color.value
+  })
+ })
+
+ alert("Məlumatlar saxlanıldı")
+
+}
+
+</script>
+
+</body>
+</html>
