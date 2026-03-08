@@ -1,0 +1,30 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Login</title>
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+</head>
+<body>
+
+<h2>Login</h2>
+
+<input id="name" placeholder="name">
+<button onclick="login()">Login</button>
+
+<script>
+
+const socket=io()
+
+function login(){
+
+ socket.emit("login",{name:document.getElementById("name").value})
+
+ alert("Logged")
+
+}
+
+</script>
+
+</body>
+</html>

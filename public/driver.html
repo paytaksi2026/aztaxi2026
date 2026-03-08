@@ -17,29 +17,34 @@ body{margin:0;font-family:Arial}
 
 <script>
 
-const socket=io();
+const socket=io()
 
-const map=L.map("map").setView([40.4093,49.8671],13);
+const map=L.map("map").setView([40.4093,49.8671],13)
 
-L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map)
 
 navigator.geolocation.watchPosition(p=>{
 
- const loc={location:{lat:p.coords.latitude,lng:p.coords.longitude}};
-
- socket.emit("driver-location",loc);
-
-});
-
-socket.emit("driver-online",{online:true});
-
-socket.on("order",o=>{
-
- if(confirm("New trip request")){
-  socket.emit("accept",o);
+ const loc={
+  location:{
+   lat:p.coords.latitude,
+   lng:p.coords.longitude
+  }
  }
 
-});
+ socket.emit("driver-location",loc)
+
+})
+
+socket.emit("driver-online",{online:true})
+
+socket.on("trip-request",t=>{
+
+ if(confirm("New trip "+t.price+" AZN")){
+  socket.emit("trip-accept",t)
+ }
+
+})
 
 </script>
 

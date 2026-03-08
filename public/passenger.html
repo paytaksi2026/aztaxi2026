@@ -3,68 +3,76 @@
 <html>
 <head>
 <title>AzTaxi Passenger</title>
+<link rel="manifest" href="/pwa/manifest.json">
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 <style>
 body{margin:0;font-family:Arial}
 #map{height:90vh}
-#btn{width:100%;padding:15px;font-size:18px}
+button{width:100%;padding:15px;font-size:18px}
 </style>
 </head>
 <body>
 
 <div id="map"></div>
-<button id="btn" onclick="order()">Order Taxi</button>
+<button onclick="order()">Order Taxi</button>
 
 <script>
 
-const socket=io();
-const map=L.map("map").setView([40.4093,49.8671],13);
+const socket=io()
 
-L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
+const map=L.map("map").setView([40.4093,49.8671],13)
 
-let pickup=null;
-let dest=null;
-let drivers=[];
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map)
+
+let pickup=null
+let dest=null
+let driverMarkers=[]
 
 map.on("click",e=>{
 
  if(!pickup){
-  pickup=e.latlng;
-  L.marker(pickup).addTo(map);
+  pickup=e.latlng
+  L.marker(pickup).addTo(map)
  }
  else{
-  dest=e.latlng;
-  L.marker(dest).addTo(map);
+  dest=e.latlng
+  L.marker(dest).addTo(map)
  }
 
-});
+})
 
 socket.on("drivers",d=>{
- drivers.forEach(m=>map.removeLayer(m));
- drivers=[];
+
+ driverMarkers.forEach(m=>map.removeLayer(m))
+ driverMarkers=[]
 
  d.forEach(dr=>{
-  const m=L.marker([dr.location.lat,dr.location.lng]).addTo(map);
-  drivers.push(m);
- });
-});
+  const m=L.marker([dr.location.lat,dr.location.lng]).addTo(map)
+  driverMarkers.push(m)
+ })
+
+})
 
 function order(){
 
- socket.emit("create-order",{
+ socket.emit("create-trip",{
   pickup:pickup,
   destination:dest
- });
+ })
 
- alert("Taxi ordered");
+ alert("Taxi ordered")
 
 }
 
-socket.on("accepted",()=>{
- alert("Driver accepted trip");
-});
+socket.on("trip-start",()=>{
+ alert("Driver accepted")
+})
+
+socket.on("trip-finish",()=>{
+ alert("Trip finished")
+})
 
 </script>
 
