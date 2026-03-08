@@ -1,0 +1,89 @@
+
+body{
+ margin:0;
+ font-family:Arial;
+}
+
+#map{
+ height:100vh;
+}
+
+.topBar{
+ position:absolute;
+ top:10px;
+ left:10px;
+ background:black;
+ color:white;
+ padding:10px 16px;
+ border-radius:12px;
+ font-weight:bold;
+}
+
+.bottomPanel{
+ position:absolute;
+ bottom:0;
+ left:0;
+ right:0;
+ background:white;
+ border-radius:25px 25px 0 0;
+ padding:18px;
+ box-shadow:0 -4px 20px rgba(0,0,0,0.2);
+}
+
+.inputBlock{
+ margin-bottom:10px;
+}
+
+input{
+ width:100%;
+ padding:12px;
+ border-radius:10px;
+ border:1px solid #ddd;
+ font-size:15px;
+}
+
+.list{
+ background:white;
+ max-height:120px;
+ overflow:auto;
+}
+
+.list div{
+ padding:8px;
+ border-bottom:1px solid #eee;
+ cursor:pointer;
+}
+
+.rides{
+ display:flex;
+ gap:10px;
+ margin-top:10px;
+ overflow:auto;
+}
+
+.card{
+ min-width:120px;
+ padding:10px;
+ border-radius:14px;
+ border:1px solid #eee;
+ text-align:center;
+}
+
+.card img{
+ width:70px;
+}
+
+.price{
+ font-weight:bold;
+}
+
+.orderBtn{
+ width:100%;
+ padding:15px;
+ border:none;
+ background:#ff3b30;
+ color:white;
+ font-size:18px;
+ border-radius:14px;
+ margin-top:10px;
+}
