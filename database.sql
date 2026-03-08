@@ -3,7 +3,7 @@ CREATE TABLE users(
 id SERIAL PRIMARY KEY,
 name TEXT,
 phone TEXT,
-role TEXT
+password TEXT
 );
 
 CREATE TABLE drivers(
@@ -11,13 +11,13 @@ id SERIAL PRIMARY KEY,
 name TEXT,
 car TEXT,
 plate TEXT,
-rating FLOAT DEFAULT 5
+balance FLOAT DEFAULT 0
 );
 
-CREATE TABLE orders(
+CREATE TABLE trips(
 id SERIAL PRIMARY KEY,
-pickup TEXT,
-destination TEXT,
+pickup JSON,
+destination JSON,
 price FLOAT,
 status TEXT,
 created_at TIMESTAMP DEFAULT NOW()
