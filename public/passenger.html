@@ -3,199 +3,40 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>AzTaxi Passenger</title>
+<title>AzTaxi</title>
 
+<link rel="stylesheet" href="styles.css"/>
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
-<style>
-body{
- margin:0;
- font-family:Arial;
-}
-
-#map{
- height:100vh;
-}
-
-.panel{
- position:absolute;
- bottom:0;
- left:0;
- right:0;
- background:white;
- border-radius:20px 20px 0 0;
- padding:15px;
- box-shadow:0 -2px 10px rgba(0,0,0,0.2);
-}
-
-.input{
- width:100%;
- padding:12px;
- margin-top:8px;
- border-radius:10px;
- border:1px solid #ccc;
- font-size:16px;
-}
-
-.list{
- background:white;
- max-height:150px;
- overflow:auto;
- border:1px solid #eee;
-}
-
-.item{
- padding:8px;
- cursor:pointer;
-}
-
-.item:hover{
- background:#f2f2f2;
-}
-
-.button{
- width:100%;
- padding:14px;
- background:#ff3b30;
- color:white;
- font-size:18px;
- border:none;
- border-radius:12px;
- margin-top:10px;
-}
-
-.price{
- font-size:18px;
- margin-top:5px;
-}
-</style>
-
 </head>
-
 <body>
 
 <div id="map"></div>
 
-<div class="panel">
+<div class="topBar">
+  <div class="logo">🚕 AzTaxi</div>
+</div>
 
-<div>Minmə yeri</div>
-<input id="from" class="input" placeholder="Haradan gedəcəksiniz?">
-<div id="fromList" class="list"></div>
+<div class="bottomPanel">
 
-<div style="margin-top:10px">Təyinat ünvanı</div>
-<input id="to" class="input" placeholder="Haraya gedəcəksiniz?">
-<div id="toList" class="list"></div>
+  <div class="inputBlock">
+    <input id="from" placeholder="Haradan gedəcəksiniz?">
+    <div id="fromList" class="list"></div>
+  </div>
 
-<div class="price" id="price"></div>
+  <div class="inputBlock">
+    <input id="to" placeholder="Haraya gedəcəksiniz?">
+    <div id="toList" class="list"></div>
+  </div>
 
-<button class="button">Sifariş et</button>
+  <div id="rideOptions" class="rides"></div>
+
+  <button class="orderBtn">Sifariş et</button>
 
 </div>
 
-<script>
-
-const map = L.map('map').setView([40.4093,49.8671],13)
-
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map)
-
-let fromCoord=null
-let toCoord=null
-let routeLine=null
-
-async function search(q){
-
- const url=`https://nominatim.openstreetmap.org/search?format=json&q=${q}`
- const r=await fetch(url)
- return await r.json()
-
-}
-
-function fillList(list,data,callback){
-
- list.innerHTML=""
-
- data.slice(0,5).forEach(p=>{
-
-  const div=document.createElement("div")
-  div.className="item"
-  div.textContent=p.display_name
-
-  div.onclick=()=>{
-   list.innerHTML=""
-   callback(p)
-  }
-
-  list.appendChild(div)
-
- })
-
-}
-
-document.getElementById("from").oninput=async e=>{
-
- const data=await search(e.target.value)
- fillList(
-  document.getElementById("fromList"),
-  data,
-  p=>{
-
-   fromCoord=[p.lat,p.lon]
-
-   L.marker(fromCoord).addTo(map)
-   map.setView(fromCoord,14)
-
-   drawRoute()
-
-  }
- )
-
-}
-
-document.getElementById("to").oninput=async e=>{
-
- const data=await search(e.target.value)
- fillList(
-  document.getElementById("toList"),
-  data,
-  p=>{
-
-   toCoord=[p.lat,p.lon]
-
-   L.marker(toCoord).addTo(map)
-   drawRoute()
-
-  }
- )
-
-}
-
-async function drawRoute(){
-
- if(!fromCoord||!toCoord)return
-
- const url=`https://router.project-osrm.org/route/v1/driving/${fromCoord[1]},${fromCoord[0]};${toCoord[1]},${toCoord[0]}?overview=full&geometries=geojson`
-
- const r=await fetch(url)
- const data=await r.json()
-
- const coords=data.routes[0].geometry.coordinates.map(c=>[c[1],c[0]])
-
- if(routeLine)map.removeLayer(routeLine)
-
- routeLine=L.polyline(coords,{color:"green"}).addTo(map)
-
- map.fitBounds(routeLine.getBounds())
-
- const dist=data.routes[0].distance/1000
-
- const price=(2+dist*0.6).toFixed(2)
-
- document.getElementById("price").innerText=`Qiymət: ${price} ₼ | məsafə ${dist.toFixed(1)} km`
-
-}
-
-</script>
+<script src="app.js"></script>
 
 </body>
 </html>
