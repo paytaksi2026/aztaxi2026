@@ -5,7 +5,12 @@ body{
 }
 
 #map{
- height:55vh;
+ height:60vh;
+}
+
+.bottomPanel{
+ height:40vh;
+ overflow:auto;
 }
 
 .topBar{
