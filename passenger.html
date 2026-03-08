@@ -1,0 +1,37 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>AzTaxi Passenger</title>
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+</head>
+<body>
+
+<h2>AzTaxi Passenger</h2>
+
+Pickup <input id="pickup"><br><br>
+Destination <input id="dest"><br><br>
+<button onclick="order()">Order Taxi</button>
+
+<script>
+const socket = io();
+
+function order(){
+
+const data = {
+pickup:document.getElementById("pickup").value,
+destination:document.getElementById("dest").value,
+price:5
+};
+
+socket.emit("create-order",data);
+alert("Order sent");
+}
+
+socket.on("order-accepted",o=>{
+alert("Driver accepted your order");
+});
+</script>
+
+</body>
+</html>
