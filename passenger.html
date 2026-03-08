@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>AzTaxi Passenger</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+<style>
+body{margin:0;font-family:Arial}
+#map{height:90vh}
+button{width:100%;padding:15px;font-size:18px}
+</style>
+</head>
+<body>
+
+<div id="map"></div>
+<button onclick="order()">Order Taxi</button>
+
+<script>
+
+const socket = io();
+const map = L.map('map').setView([40.4093,49.8671],13);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+let pickup=null;
+let destination=null;
+
+map.on("click",e=>{
+
+ if(!pickup){
+   pickup=e.latlng;
+   L.marker(pickup).addTo(map);
+ }else{
+   destination=e.latlng;
+   L.marker(destination).addTo(map);
+ }
+
+});
+
+function order(){
+
+const data={pickup,destination,price:5};
+
+socket.emit("create-order",data);
+
+alert("Order sent");
+
+}
+
+socket.on("order-accepted",()=>{
+alert("Driver accepted");
+});
+
+</script>
+
+</body>
+</html>
