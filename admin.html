@@ -6,21 +6,20 @@
 </head>
 <body>
 
-<h2>AzTaxi Admin</h2>
+<h2>Orders</h2>
 
-<button onclick="load()">Load Orders</button>
+<button onclick="load()">Refresh</button>
 
-<pre id="orders"></pre>
+<pre id="out"></pre>
 
 <script>
 
 async function load(){
 
-const r = await fetch("/api/orders");
-const data = await r.json();
+ const r=await fetch("/api/orders");
+ const d=await r.json();
 
-document.getElementById("orders").textContent =
-JSON.stringify(data,null,2);
+ document.getElementById("out").textContent=JSON.stringify(d,null,2);
 
 }
 
