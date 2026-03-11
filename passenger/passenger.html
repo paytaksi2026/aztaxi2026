@@ -9,20 +9,17 @@
 </head>
 <body>
 
-<div class="header">🚕 AzTaxi Passenger</div>
-<div id="map" class="map"></div>
+<div class="header">🚕 AzTaxi</div>
+<div id="map"></div>
 
 <div class="panel">
-<input class="input" placeholder="Pickup location">
-<input class="input" placeholder="Destination">
+<input id="pickup" class="input" placeholder="Pickup location">
+<div id="pickupList" class="suggestions"></div>
 
-<div class="car-types">
-<div class="car">Economy<br>3.5 AZN</div>
-<div class="car">Comfort<br>5 AZN</div>
-<div class="car">Van<br>7 AZN</div>
-</div>
+<input id="dest" class="input" placeholder="Destination">
+<div id="destList" class="suggestions"></div>
 
-<div class="ride-btn" onclick="requestRide()">Request Ride</div>
+<div class="btn" onclick="requestRide()">Request Ride</div>
 </div>
 
 <script src="../assets/js/passenger.js"></script>
