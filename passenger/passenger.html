@@ -3,34 +3,32 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Passenger</title>
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-<style>#map{height:100vh}</style>
+<title>AzTaxi Passenger</title>
+<link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
-<div id="map"></div>
-<button onclick="order()" style="position:absolute;top:10px;left:10px">Sifariş</button>
 
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<script src="/socket.io/socket.io.js"></script>
+<div class="header">🚕 AzTaxi</div>
 
-<script>
-const socket=io();
-const map=L.map("map").setView([40.4093,49.8671],13);
+<div class="map">
+Map Area (OpenStreetMap burada olacaq)
+</div>
 
-L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
+<div class="panel">
+<label>Pickup</label>
+<input placeholder="Pickup location">
 
-let marker;
+<label>Destination</label>
+<input placeholder="Destination">
 
-map.on("click",(e)=>{
- if(marker)map.removeLayer(marker);
- marker=L.marker(e.latlng).addTo(map);
-});
+<label>Payment</label>
+<select>
+<option>Cash</option>
+<option>Card</option>
+</select>
 
-function order(){
- if(!marker) return alert("Nöqtə seç");
- socket.emit("create-order",marker.getLatLng());
-}
-</script>
+<button>Request Ride</button>
+</div>
+
 </body>
 </html>

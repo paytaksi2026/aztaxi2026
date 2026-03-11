@@ -1,24 +1,30 @@
 
 <!DOCTYPE html>
 <html>
-<head><meta charset="utf-8"><title>Admin</title></head>
+<head>
+<meta charset="utf-8">
+<title>AzTaxi Admin</title>
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
 <body>
-<h2>Drivers</h2>
-<pre id="drivers"></pre>
 
-<h2>Orders</h2>
-<pre id="orders"></pre>
+<div class="header">AzTaxi Admin Dashboard</div>
 
-<script>
-async function load(){
- const d=await fetch("/api/drivers").then(r=>r.json());
- const o=await fetch("/api/orders").then(r=>r.json());
+<div class="card">
+Total Drivers: 120
+</div>
 
- document.getElementById("drivers").innerText=JSON.stringify(d,null,2);
- document.getElementById("orders").innerText=JSON.stringify(o,null,2);
-}
+<div class="card">
+Active Rides: 35
+</div>
 
-setInterval(load,2000);
-</script>
+<div class="card">
+Platform Earnings: 480 AZN
+</div>
+
+<div class="card">
+Withdraw Requests: 4
+</div>
+
 </body>
 </html>

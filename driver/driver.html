@@ -3,32 +3,32 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Driver</title>
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-<style>#map{height:100vh}</style>
+<title>AzTaxi Driver</title>
+<link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
-<div id="map"></div>
 
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<script src="/socket.io/socket.io.js"></script>
+<div class="header">🚖 Driver Panel</div>
 
-<script>
-const socket=io();
-const map=L.map("map").setView([40.4093,49.8671],13);
+<div class="map">
+Driver Map
+</div>
 
-L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
+<div class="panel">
+<button>Online</button>
 
-navigator.geolocation.watchPosition(pos=>{
- const lat=pos.coords.latitude;
- const lng=pos.coords.longitude;
- socket.emit("driver-online",{lat,lng});
- socket.emit("driver-location",{lat,lng});
-});
+<div class="card">
+New Ride Request
+<br><br>
+Distance: 2.3 km
+<br>
+Price: 5.60 AZN
+<br><br>
+<button>Accept</button>
+<button style="background:#ccc">Reject</button>
+</div>
 
-socket.on("driver-new-order",(order)=>{
- L.marker([order.lat,order.lng]).addTo(map).bindPopup("Yeni sifariş").openPopup();
-});
-</script>
+</div>
+
 </body>
 </html>
