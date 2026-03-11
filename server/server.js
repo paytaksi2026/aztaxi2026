@@ -1,33 +1,26 @@
 
 const express = require("express");
+const http = require("http");
+const { Server } = require("socket.io");
+
 const app = express();
+const server = http.createServer(app);
+const io = new Server(server);
 
-app.use(express.json());
+app.use("/passenger", express.static(__dirname + "/../passenger"));
+app.use("/driver", express.static(__dirname + "/../driver"));
+app.use("/assets", express.static(__dirname + "/../assets"));
 
-let promos = [
-{code:"AZTAXI10",discount:10},
-{code:"FIRSTRIDE",discount:20}
-];
+io.on("connection", socket => {
 
-app.post("/api/apply-promo",(req,res)=>{
+socket.on("join", room => {
+socket.join(room);
+});
 
-const {code,price} = req.body;
-
-const p = promos.find(x=>x.code===code);
-
-if(!p) return res.json({ok:false});
-
-const discount = price * (p.discount/100);
-const finalPrice = price - discount;
-
-res.json({
-ok:true,
-discount:p.discount,
-finalPrice:finalPrice.toFixed(2)
+socket.on("chat-message", data => {
+io.to(data.room).emit("chat-message", data);
 });
 
 });
 
-app.get("/api/promos",(req,res)=>res.json(promos));
-
-app.listen(3000,()=>console.log("Promo system running"));
+server.listen(3000, () => console.log("Chat system running"));
