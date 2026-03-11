@@ -1,4 +1,3 @@
 
-body{margin:0;font-family:Arial;background:#111;color:#fff}
-.header{background:#FFD400;color:#000;text-align:center;padding:12px;font-weight:bold}
-#map{height:92vh}
+body{font-family:Arial;text-align:center;padding:40px}
+.stars span{font-size:40px;cursor:pointer}
