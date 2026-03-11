@@ -40,5 +40,21 @@ iconSize:[32,32]
 L.marker([40.4093,49.8671],{icon:taxiIcon}).addTo(map)
 .bindPopup('Driver location');
 </script>
+<script src="/socket.io/socket.io.js"></script>
+
+<script>
+const socket = io();
+
+navigator.geolocation.watchPosition((pos)=>{
+
+socket.emit("driver-location",{
+id:"driver1",
+lat:pos.coords.latitude,
+lng:pos.coords.longitude
+});
+
+});
+</script>
+
 </body>
 </html>
