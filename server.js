@@ -1,42 +1,52 @@
+
 const express = require("express");
-const http = require("http");
-const socketio = require("socket.io");
 const path = require("path");
 
 const app = express();
-const server = http.createServer(app);
-const io = socketio(server);
+app.use(express.json());
+
+// Serve frontend
+app.use("/passenger", express.static(path.join(__dirname, "passenger")));
+app.use("/driver", express.static(path.join(__dirname, "driver")));
+app.use("/admin", express.static(path.join(__dirname, "admin")));
+
+// Try loading optional modules if they exist
+function loadModule(file) {
+  try {
+    const mod = require("./" + file);
+    if (typeof mod === "function") {
+      mod(app);
+      console.log("Loaded module:", file);
+    } else {
+      console.log("Module loaded (no init function):", file);
+    }
+  } catch (e) {
+    console.log("Module not loaded:", file);
+  }
+}
+
+const modules = [
+  "server-orders.js",
+  "server-drivers.js",
+  "server-dispatch.js",
+  "server-driver-wallet.js",
+  "server-payments.js",
+  "server-radius.js",
+  "server-live-map.js",
+  "server-notify.js",
+  "server-alerts.js",
+  "server-commission.js",
+  "server-driver-queue.js"
+];
+
+modules.forEach(loadModule);
+
+// Basic health endpoint
+app.get("/api/health", (req, res) => {
+  res.json({ status: "AzTaxi server running" });
+});
 
 const PORT = process.env.PORT || 3000;
-
-app.use("/driver", express.static(path.join(__dirname, "driver")));
-app.use("/passenger", express.static(path.join(__dirname, "passenger")));
-
-let drivers = [];
-
-io.on("connection", (socket) => {
-
-  socket.on("driver-location", (data) => {
-
-    let driver = drivers.find(d => d.id === data.id);
-
-    if (!driver) {
-      drivers.push(data);
-    } else {
-      driver.lat = data.lat;
-      driver.lng = data.lng;
-    }
-
-    io.emit("drivers-update", drivers);
-
-  });
-
-});
-
-app.get("/", (req,res)=>{
-  res.send("AzTaxi server işləyir");
-});
-
-server.listen(PORT, ()=>{
-  console.log("AzTaxi server running");
+app.listen(PORT, () => {
+  console.log("AzTaxi server started on port", PORT);
 });
