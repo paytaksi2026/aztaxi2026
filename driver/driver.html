@@ -4,18 +4,17 @@
 <head>
 <meta charset="utf-8">
 <title>AzTaxi Driver</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
 
 <div class="header">🚖 Driver Panel</div>
 
-<div class="map">
-Driver Map
-</div>
+<div id="map"></div>
 
 <div class="panel">
-<button>Online</button>
+<button onclick="goOnline()">Go Online</button>
 
 <div class="card">
 New Ride Request
@@ -29,6 +28,9 @@ Price: 5.60 AZN
 </div>
 
 </div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="../assets/js/driver.js"></script>
 
 </body>
 </html>

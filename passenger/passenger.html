@@ -4,22 +4,21 @@
 <head>
 <meta charset="utf-8">
 <title>AzTaxi Passenger</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
 
 <div class="header">🚕 AzTaxi</div>
 
-<div class="map">
-Map Area (OpenStreetMap burada olacaq)
-</div>
+<div id="map"></div>
 
 <div class="panel">
 <label>Pickup</label>
-<input placeholder="Pickup location">
+<input id="pickup" placeholder="Pickup location">
 
 <label>Destination</label>
-<input placeholder="Destination">
+<input id="dest" placeholder="Destination">
 
 <label>Payment</label>
 <select>
@@ -27,8 +26,11 @@ Map Area (OpenStreetMap burada olacaq)
 <option>Card</option>
 </select>
 
-<button>Request Ride</button>
+<button onclick="requestRide()">Request Ride</button>
 </div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="../assets/js/passenger.js"></script>
 
 </body>
 </html>

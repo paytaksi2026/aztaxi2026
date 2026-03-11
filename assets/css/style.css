@@ -12,13 +12,8 @@ padding:12px;
 font-weight:bold;
 text-align:center;
 }
-.map{
+#map{
 height:80vh;
-background:#222;
-display:flex;
-align-items:center;
-justify-content:center;
-color:#aaa;
 }
 .panel{
 position:fixed;
