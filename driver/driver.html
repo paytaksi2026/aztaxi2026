@@ -3,9 +3,9 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>AzTaxi Driver</title>
+<title>Driver</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-<style>#map{height:100vh;}</style>
+<style>#map{height:100vh}</style>
 </head>
 <body>
 <div id="map"></div>
@@ -14,29 +14,21 @@
 <script src="/socket.io/socket.io.js"></script>
 
 <script>
+const socket=io();
+const map=L.map("map").setView([40.4093,49.8671],13);
 
-const socket = io();
-
-const map = L.map('map').setView([40.4093,49.8671],13);
-
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
 
 navigator.geolocation.watchPosition(pos=>{
-
-    const lat = pos.coords.latitude;
-    const lng = pos.coords.longitude;
-
-    socket.emit("driver-online",{lat,lng});
-    socket.emit("driver-location",{lat,lng});
-
+ const lat=pos.coords.latitude;
+ const lng=pos.coords.longitude;
+ socket.emit("driver-online",{lat,lng});
+ socket.emit("driver-location",{lat,lng});
 });
 
-socket.on("new-order",(order)=>{
-    L.marker([order.lat,order.lng]).addTo(map)
-    .bindPopup("Yeni sifariş")
-    .openPopup();
+socket.on("driver-new-order",(order)=>{
+ L.marker([order.lat,order.lng]).addTo(map).bindPopup("Yeni sifariş").openPopup();
 });
-
 </script>
 </body>
 </html>

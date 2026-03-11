@@ -1,25 +1,24 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="utf-8">
-<title>AzTaxi Admin</title>
-</head>
+<head><meta charset="utf-8"><title>Admin</title></head>
 <body>
+<h2>Drivers</h2>
+<pre id="drivers"></pre>
+
 <h2>Orders</h2>
-<ul id="orders"></ul>
+<pre id="orders"></pre>
 
 <script>
-fetch("/api/orders")
-.then(r=>r.json())
-.then(data=>{
-    const ul = document.getElementById("orders");
-    data.forEach(o=>{
-        const li = document.createElement("li");
-        li.innerText = JSON.stringify(o);
-        ul.appendChild(li);
-    });
-});
+async function load(){
+ const d=await fetch("/api/drivers").then(r=>r.json());
+ const o=await fetch("/api/orders").then(r=>r.json());
+
+ document.getElementById("drivers").innerText=JSON.stringify(d,null,2);
+ document.getElementById("orders").innerText=JSON.stringify(o,null,2);
+}
+
+setInterval(load,2000);
 </script>
 </body>
 </html>
