@@ -1,0 +1,24 @@
+
+body{margin:0;font-family:Arial;background:#f5f5f5}
+#map{height:100vh;width:100%}
+.top-bar{
+position:absolute;
+top:20px;
+left:50%;
+transform:translateX(-50%);
+background:white;
+padding:10px 15px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,0.2);
+}
+.call-btn{
+position:absolute;
+bottom:30px;
+left:50%;
+transform:translateX(-50%);
+padding:16px 28px;
+background:#ffd400;
+border:none;
+border-radius:30px;
+font-size:18px;
+}
