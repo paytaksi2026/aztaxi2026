@@ -1,41 +1,33 @@
 
 const express = require("express");
 const app = express();
-const fs = require("fs");
-const path = require("path");
 
 app.use(express.json());
 
-let payments = [];
+let promos = [
+{code:"AZTAXI10",discount:10},
+{code:"FIRSTRIDE",discount:20}
+];
 
-app.post("/api/pay",(req,res)=>{
+app.post("/api/apply-promo",(req,res)=>{
 
-const {rideId,amount,method} = req.body;
+const {code,price} = req.body;
 
-const payment = {
-rideId,
-amount,
-method,
-time:Date.now()
-};
+const p = promos.find(x=>x.code===code);
 
-payments.push(payment);
+if(!p) return res.json({ok:false});
 
-const receipt = `
-Ride: ${rideId}
-Amount: ${amount} AZN
-Method: ${method}
-Time: ${new Date().toISOString()}
-`;
+const discount = price * (p.discount/100);
+const finalPrice = price - discount;
 
-const file = path.join(__dirname,"../receipts/ride_"+rideId+".txt");
-
-fs.writeFileSync(file,receipt);
-
-res.json({ok:true});
+res.json({
+ok:true,
+discount:p.discount,
+finalPrice:finalPrice.toFixed(2)
+});
 
 });
 
-app.get("/api/payments",(req,res)=>res.json(payments));
+app.get("/api/promos",(req,res)=>res.json(promos));
 
-app.listen(3000,()=>console.log("Payment module running"));
+app.listen(3000,()=>console.log("Promo system running"));
