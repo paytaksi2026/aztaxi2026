@@ -1,32 +1,41 @@
 
 const express = require("express");
 const app = express();
+const fs = require("fs");
+const path = require("path");
 
 app.use(express.json());
 
-let users = [];
-let rides = [];
-let earnings = 0;
+let payments = [];
 
-app.post("/api/register",(req,res)=>{
-users.push(req.body);
+app.post("/api/pay",(req,res)=>{
+
+const {rideId,amount,method} = req.body;
+
+const payment = {
+rideId,
+amount,
+method,
+time:Date.now()
+};
+
+payments.push(payment);
+
+const receipt = `
+Ride: ${rideId}
+Amount: ${amount} AZN
+Method: ${method}
+Time: ${new Date().toISOString()}
+`;
+
+const file = path.join(__dirname,"../receipts/ride_"+rideId+".txt");
+
+fs.writeFileSync(file,receipt);
+
 res.json({ok:true});
+
 });
 
-app.post("/api/login",(req,res)=>{
-const u = users.find(x=>x.phone==req.body.phone && x.password==req.body.password);
-if(!u) return res.json({ok:false});
-res.json({ok:true,user:u});
-});
+app.get("/api/payments",(req,res)=>res.json(payments));
 
-app.post("/api/ride-finish",(req,res)=>{
-rides.push(req.body);
-earnings += req.body.price * 0.1;
-res.json({ok:true});
-});
-
-app.get("/api/rides",(req,res)=>res.json(rides));
-
-app.get("/api/earnings",(req,res)=>res.json({earnings}));
-
-app.listen(3000,()=>console.log("AzTaxi module running"));
+app.listen(3000,()=>console.log("Payment module running"));
