@@ -4,37 +4,29 @@ const app = express();
 
 app.use(express.json());
 
-let ratings = [];
-let driverStats = {};
+let users = [];
+let rides = [];
+let earnings = 0;
 
-app.post("/api/rate-driver",(req,res)=>{
-
-const {driverId,stars} = req.body;
-
-ratings.push({driverId,stars});
-
-if(!driverStats[driverId]){
-driverStats[driverId] = {total:0,count:0};
-}
-
-driverStats[driverId].total += stars;
-driverStats[driverId].count += 1;
-
+app.post("/api/register",(req,res)=>{
+users.push(req.body);
 res.json({ok:true});
-
 });
 
-app.get("/api/driver-rating/:id",(req,res)=>{
-
-const s = driverStats[req.params.id];
-
-if(!s) return res.json({rating:0});
-
-res.json({
-rating:(s.total/s.count).toFixed(2),
-rides:s.count
+app.post("/api/login",(req,res)=>{
+const u = users.find(x=>x.phone==req.body.phone && x.password==req.body.password);
+if(!u) return res.json({ok:false});
+res.json({ok:true,user:u});
 });
 
+app.post("/api/ride-finish",(req,res)=>{
+rides.push(req.body);
+earnings += req.body.price * 0.1;
+res.json({ok:true});
 });
 
-app.listen(3000,()=>console.log("Rating system running"));
+app.get("/api/rides",(req,res)=>res.json(rides));
+
+app.get("/api/earnings",(req,res)=>res.json({earnings}));
+
+app.listen(3000,()=>console.log("AzTaxi module running"));
