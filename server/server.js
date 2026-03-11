@@ -1,26 +1,37 @@
 
 const express = require("express");
-const http = require("http");
-const { Server } = require("socket.io");
-
 const app = express();
-const server = http.createServer(app);
-const io = new Server(server);
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
 
-app.use("/passenger", express.static(__dirname + "/../passenger"));
-app.use("/driver", express.static(__dirname + "/../driver"));
-app.use("/assets", express.static(__dirname + "/../assets"));
+app.use(express.json());
 
-io.on("connection", socket => {
+let drivers = [];
 
-socket.on("join", room => {
-socket.join(room);
+app.post("/api/driver-kyc", upload.single("document"), (req,res)=>{
+
+const driver = {
+name:req.body.name,
+car:req.body.car,
+doc:req.file.filename,
+status:"PENDING"
+};
+
+drivers.push(driver);
+
+res.json({ok:true});
+
 });
 
-socket.on("chat-message", data => {
-io.to(data.room).emit("chat-message", data);
-});
+app.get("/api/kyc-list",(req,res)=>res.json(drivers));
+
+app.post("/api/kyc-approve",(req,res)=>{
+
+const d = drivers[req.body.index];
+if(d) d.status="APPROVED";
+
+res.json({ok:true});
 
 });
 
-server.listen(3000, () => console.log("Chat system running"));
+app.listen(3000,()=>console.log("KYC module running"));
