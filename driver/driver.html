@@ -1,1 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>AzTaxi Driver</title>
+<style>
+body{font-family:Arial;margin:0}
+#map{height:100vh;width:100%}
+button{
+position:absolute;
+bottom:20px;
+left:50%;
+transform:translateX(-50%);
+padding:15px 25px;
+background:#ffd400;
+border:none;
+font-size:18px;
+border-radius:30px;
+}
+</style>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+</head>
+<body>
+<div id="map"></div>
+<button>Online / Offline</button>
 
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+var map = L.map('map').setView([40.4093,49.8671],13);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+maxZoom:19
+}).addTo(map);
+
+var taxiIcon = L.icon({
+iconUrl:'https://cdn-icons-png.flaticon.com/512/744/744465.png',
+iconSize:[32,32]
+});
+
+L.marker([40.4093,49.8671],{icon:taxiIcon}).addTo(map)
+.bindPopup('Driver location');
+</script>
+</body>
+</html>
