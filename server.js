@@ -1,52 +1,59 @@
 
 const express = require("express");
+const http = require("http");
 const path = require("path");
+const fs = require("fs");
+const { Server } = require("socket.io");
 
 const app = express();
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: { origin: "*" }
+});
+
 app.use(express.json());
 
-// Serve frontend
+// static folders
 app.use("/passenger", express.static(path.join(__dirname, "passenger")));
 app.use("/driver", express.static(path.join(__dirname, "driver")));
 app.use("/admin", express.static(path.join(__dirname, "admin")));
+app.use("/android", express.static(path.join(__dirname, "android")));
 
-// Try loading optional modules if they exist
-function loadModule(file) {
-  try {
-    const mod = require("./" + file);
-    if (typeof mod === "function") {
-      mod(app);
-      console.log("Loaded module:", file);
-    } else {
-      console.log("Module loaded (no init function):", file);
+// auto load all server modules
+const files = fs.readdirSync(__dirname);
+
+files.forEach(file => {
+  if (file.startsWith("server-") && file.endsWith(".js")) {
+    try {
+      const mod = require("./" + file);
+      if (typeof mod === "function") {
+        mod(app, io);
+        console.log("Loaded module:", file);
+      } else {
+        console.log("Module loaded:", file);
+      }
+    } catch (err) {
+      console.log("Module error:", file, err.message);
     }
-  } catch (e) {
-    console.log("Module not loaded:", file);
   }
-}
+});
 
-const modules = [
-  "server-orders.js",
-  "server-drivers.js",
-  "server-dispatch.js",
-  "server-driver-wallet.js",
-  "server-payments.js",
-  "server-radius.js",
-  "server-live-map.js",
-  "server-notify.js",
-  "server-alerts.js",
-  "server-commission.js",
-  "server-driver-queue.js"
-];
+// socket connection
+io.on("connection", (socket) => {
+  console.log("Client connected:", socket.id);
 
-modules.forEach(loadModule);
+  socket.on("disconnect", () => {
+    console.log("Client disconnected:", socket.id);
+  });
+});
 
-// Basic health endpoint
-app.get("/api/health", (req, res) => {
-  res.json({ status: "AzTaxi server running" });
+// health check
+app.get("/api/health", (req,res)=>{
+  res.json({status:"AzTaxi running"});
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log("AzTaxi server started on port", PORT);
+
+server.listen(PORT, ()=>{
+  console.log("AzTaxi server running on port", PORT);
 });
