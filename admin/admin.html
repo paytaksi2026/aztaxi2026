@@ -8,23 +8,21 @@
 </head>
 <body>
 
-<div class="header">AzTaxi Admin</div>
+<div class="header">AzTaxi Admin Dashboard</div>
 
-<div class="card">
-Drivers Online: <span id="drivers"></span>
-</div>
-
-<div class="card">
-Orders: <span id="orders"></span>
-</div>
+<div class="card">Drivers Online: <span id="drivers"></span></div>
+<div class="card">Orders: <span id="orders"></span></div>
+<div class="card">Withdraw Requests: <span id="withdraws"></span></div>
 
 <script>
 async function load(){
 const d=await fetch("/api/drivers").then(r=>r.json());
 const o=await fetch("/api/orders").then(r=>r.json());
+const w=await fetch("/api/withdraws").then(r=>r.json());
 
 document.getElementById("drivers").innerText=Object.keys(d).length;
 document.getElementById("orders").innerText=o.length;
+document.getElementById("withdraws").innerText=w.length;
 }
 setInterval(load,2000);
 </script>
