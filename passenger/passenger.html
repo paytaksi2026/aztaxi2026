@@ -5,7 +5,7 @@
 <title>AzTaxi Passenger</title>
 <style>
 body{font-family:Arial;margin:0;background:#f5f5f5}
-#map{height:100vh;width:100%}
+#map{height:65vh;width:100%}
 </style>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 </head>
@@ -15,29 +15,13 @@ body{font-family:Arial;margin:0;background:#f5f5f5}
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 var map = L.map('map').setView([40.4093,49.8671],13);
-startLiveDriverMap(map);
-AzTaxiDestination.selectDestination(map);
+
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
 maxZoom:19
 }).addTo(map);
 
 L.marker([40.4093,49.8671]).addTo(map)
 .bindPopup('Passenger start');
-
 </script>
-
-
-
-<script src="passenger-live-map.js"></script>
-<script src="passenger-driver-route.js"></script>
-<script src="passenger-destination.js"></script>
-<script src="navigation-route.js"></script>
-<script src="eta.js"></script>
-<script src="promo-system.js"></script>
-
-
-
-
-  
 </body>
 </html>
