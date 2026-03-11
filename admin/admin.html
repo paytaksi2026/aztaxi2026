@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Admin</title>
+<title>AzTaxi Admin</title>
 <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
@@ -11,7 +11,7 @@
 <div class="header">AzTaxi Admin</div>
 
 <div class="card">
-Drivers online: <span id="drivers"></span>
+Drivers Online: <span id="drivers"></span>
 </div>
 
 <div class="card">
@@ -22,6 +22,7 @@ Orders: <span id="orders"></span>
 async function load(){
 const d=await fetch("/api/drivers").then(r=>r.json());
 const o=await fetch("/api/orders").then(r=>r.json());
+
 document.getElementById("drivers").innerText=Object.keys(d).length;
 document.getElementById("orders").innerText=o.length;
 }

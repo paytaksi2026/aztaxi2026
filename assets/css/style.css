@@ -1,6 +1,7 @@
 
-body{margin:0;font-family:Arial;background:#111;color:#fff;}
-.header{background:#FFD400;color:#000;padding:12px;text-align:center;font-weight:bold;}
-#map{height:80vh;}
-.panel{position:fixed;bottom:0;width:100%;background:#fff;color:#000;padding:15px}
+body{margin:0;font-family:Arial;background:#111;color:#fff}
+.header{background:#FFD400;color:#000;text-align:center;padding:12px;font-weight:bold}
+#map{height:85vh}
+.panel{position:fixed;bottom:0;width:100%;background:#fff;color:#000;padding:10px}
+button{padding:10px;background:#FFD400;border:none;font-weight:bold;width:100%}
 .card{background:#fff;color:#000;margin:10px;padding:10px;border-radius:10px}
