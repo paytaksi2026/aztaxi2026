@@ -3,34 +3,18 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>AzTaxi Driver</title>
+<title>Driver</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-<link rel="stylesheet" href="../assets/css/style.css">
+<link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
 
-<div class="header">🚖 Driver Panel</div>
-
+<div class="header">🚖 Driver</div>
 <div id="map"></div>
 
-<div class="panel">
-<button onclick="goOnline()">Go Online</button>
-
-<div class="card">
-New Ride Request
-<br><br>
-Distance: 2.3 km
-<br>
-Price: 5.60 AZN
-<br><br>
-<button>Accept</button>
-<button style="background:#ccc">Reject</button>
-</div>
-
-</div>
-
+<script src="/socket.io/socket.io.js"></script>
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<script src="../assets/js/driver.js"></script>
+<script src="/assets/js/driver.js"></script>
 
 </body>
 </html>
