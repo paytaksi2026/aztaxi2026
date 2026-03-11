@@ -1,13 +1,13 @@
 
-// Driver order receive and accept (basic version)
+// Driver order receiving and 15 second accept timer (basic version)
 
 let currentOrder = null;
-let orderTimer = null;
-let timeLeft = 15;
+let timer = null;
+let seconds = 15;
 
 function showOrder(order){
     currentOrder = order;
-    timeLeft = 15;
+    seconds = 15;
 
     const box = document.createElement("div");
     box.id = "orderBox";
@@ -20,29 +20,23 @@ function showOrder(order){
     box.style.borderRadius = "10px";
     box.style.boxShadow = "0 0 10px rgba(0,0,0,0.2)";
 
-    const title = document.createElement("div");
-    title.innerText = "Yeni sifariş";
-
-    const timer = document.createElement("div");
-    timer.id = "orderTimer";
-    timer.innerText = "15 saniyə";
-
-    const acceptBtn = document.createElement("button");
-    acceptBtn.innerText = "Qəbul et";
-    acceptBtn.onclick = acceptOrder;
-
-    box.appendChild(title);
-    box.appendChild(timer);
-    box.appendChild(acceptBtn);
+    box.innerHTML = `
+        <h3>Yeni sifariş</h3>
+        <p>Müştəri məsafə: ${order.distance} km</p>
+        <p id="timerText">Qəbul vaxtı: 15</p>
+        <button id="acceptBtn">Qəbul et</button>
+    `;
 
     document.body.appendChild(box);
 
-    orderTimer = setInterval(()=>{
-        timeLeft--;
-        document.getElementById("orderTimer").innerText = timeLeft + " saniyə";
+    document.getElementById("acceptBtn").onclick = acceptOrder;
 
-        if(timeLeft <= 0){
-            clearInterval(orderTimer);
+    timer = setInterval(()=>{
+        seconds--;
+        document.getElementById("timerText").innerText = "Qəbul vaxtı: " + seconds;
+
+        if(seconds <= 0){
+            clearInterval(timer);
             document.getElementById("orderBox").remove();
             currentOrder = null;
         }
@@ -50,16 +44,24 @@ function showOrder(order){
 }
 
 function acceptOrder(){
-    if(!currentOrder) return;
+    clearInterval(timer);
 
     fetch("/api/accept-order",{
         method:"POST",
         headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({orderId:currentOrder.id})
+        body:JSON.stringify({orderId: currentOrder.id})
     });
 
-    clearInterval(orderTimer);
     document.getElementById("orderBox").remove();
-
     alert("Sifariş qəbul edildi");
 }
+
+// Fake test order every 20 seconds (for testing)
+setInterval(()=>{
+    if(!currentOrder){
+        showOrder({
+            id: Date.now(),
+            distance: (Math.random()*3).toFixed(1)
+        });
+    }
+},20000);
