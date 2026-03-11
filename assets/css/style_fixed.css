@@ -1,0 +1,12 @@
+
+body{margin:0;font-family:Arial;background:#111;color:#fff;text-align:center}
+.header{background:#FFD400;color:#000;padding:12px;font-weight:bold}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:10px}
+.card{background:#fff;color:#000;padding:15px;border-radius:10px}
+canvas{background:#fff;margin:20px;border-radius:10px}
+
+/* FIX: map height so Leaflet map shows */
+#map{
+height:90vh;
+width:100%;
+}
