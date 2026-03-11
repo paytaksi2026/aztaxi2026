@@ -2,30 +2,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>AzTaxi Admin</title>
-<link rel="stylesheet" href="/assets/css/style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
 
-<div class="header">AzTaxi Admin Dashboard</div>
+<div class="header">🚕 AzTaxi Admin</div>
 
-<div class="card">Drivers Online: <span id="drivers"></span></div>
-<div class="card">Orders: <span id="orders"></span></div>
-<div class="card">Withdraw Requests: <span id="withdraws"></span></div>
+<div style="padding:20px">
+<h3>Live Drivers</h3>
+<div id="drivers"></div>
 
-<script>
-async function load(){
-const d=await fetch("/api/drivers").then(r=>r.json());
-const o=await fetch("/api/orders").then(r=>r.json());
-const w=await fetch("/api/withdraws").then(r=>r.json());
+<h3>Orders</h3>
+<div id="orders"></div>
+</div>
 
-document.getElementById("drivers").innerText=Object.keys(d).length;
-document.getElementById("orders").innerText=o.length;
-document.getElementById("withdraws").innerText=w.length;
-}
-setInterval(load,2000);
-</script>
-
+<script src="../assets/js/admin.js"></script>
 </body>
 </html>
