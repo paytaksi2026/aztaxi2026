@@ -23,5 +23,15 @@ maxZoom:19
 L.marker([40.4093,49.8671]).addTo(map)
 .bindPopup('Passenger start');
 </script>
+<script src="/socket.io/socket.io.js"></script>
+
+<script>
+const socket = io();
+
+socket.on("drivers-update",(drivers)=>{
+console.log("Drivers:",drivers);
+});
+</script>
+
 </body>
 </html>
