@@ -9,36 +9,40 @@ let pickupMarker=null;
 let dropMarker=null;
 let routeLine=null;
 
-navigator.geolocation.getCurrentPosition(async pos=>{
+document.getElementById("locBtn").onclick=()=>{
+
+navigator.geolocation.getCurrentPosition(pos=>{
 
 let lat=pos.coords.latitude;
 let lng=pos.coords.longitude;
 
-pickupMarker=L.marker([lat,lng]).addTo(map);
-
 map.setView([lat,lng],15);
 
-let url=`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`;
-let data=await fetch(url).then(r=>r.json());
+if(pickupMarker) map.removeLayer(pickupMarker);
 
-document.getElementById("pickup").value=data.display_name;
+pickupMarker=L.marker([lat,lng]).addTo(map);
 
 });
 
-map.on("click",function(e){
+};
+
+map.on("click",e=>{
 
 if(!pickupMarker){
 pickupMarker=L.marker(e.latlng).addTo(map);
 }else{
+
 if(dropMarker) map.removeLayer(dropMarker);
+
 dropMarker=L.marker(e.latlng).addTo(map);
+
 }
 
 });
 
-async function createRoute(){
+async function drawRoute(){
 
-if(!pickupMarker || !dropMarker) return;
+if(!pickupMarker||!dropMarker) return;
 
 let p=pickupMarker.getLatLng();
 let d=dropMarker.getLatLng();
@@ -51,37 +55,31 @@ let coords=data.routes[0].geometry.coordinates.map(c=>[c[1],c[0]]);
 
 if(routeLine) map.removeLayer(routeLine);
 
-routeLine=L.polyline(coords,{color:"blue"}).addTo(map);
+routeLine=L.polyline(coords,{color:"#000"}).addTo(map);
 
 let km=data.routes[0].distance/1000;
 
-let active=document.querySelector(".card.active");
-let rate=parseFloat(active.dataset.price);
+let active=document.querySelector(".car.active");
+
+let rate=parseFloat(active.dataset.rate);
 
 let price=(km*rate).toFixed(2);
 
-document.getElementById("price").innerText="Price: "+price+" AZN";
+document.getElementById("price").innerText="Qiymət: "+price+" AZN";
 
 }
 
-document.querySelectorAll(".card").forEach(c=>{
+document.getElementById("rideBtn").onclick=drawRoute;
+
+document.querySelectorAll(".car").forEach(c=>{
+
 c.onclick=function(){
-document.querySelectorAll(".card").forEach(x=>x.classList.remove("active"));
+
+document.querySelectorAll(".car").forEach(x=>x.classList.remove("active"));
+
 this.classList.add("active");
+
 };
+
 });
 
-// fake drivers
-for(let i=0;i<5;i++){
-
-let lat=40.39+Math.random()*0.05;
-let lng=49.84+Math.random()*0.05;
-
-L.marker([lat,lng],{
-icon:L.icon({
-iconUrl:"https://cdn-icons-png.flaticon.com/512/744/744465.png",
-iconSize:[32,32]
-})
-}).addTo(map);
-
-}
