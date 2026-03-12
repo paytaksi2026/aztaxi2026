@@ -1,0 +1,38 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Passenger</title>
+
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+</head>
+<body>
+
+<div id="map"></div>
+
+<div class="panel">
+
+<input id="pickup" placeholder="Haradan">
+<input id="drop" placeholder="Haraya">
+
+<select id="package">
+<option value="0.6">Ekonom</option>
+<option value="0.8">Komfort</option>
+<option value="1.2">Premium</option>
+</select>
+
+<div id="price"></div>
+
+<button onclick="calculate()">Ride Request</button>
+
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="../js/passenger.js"></script>
+
+</body>
+</html>
