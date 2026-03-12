@@ -1,0 +1,43 @@
+
+body{
+ margin:0;
+ font-family:Arial;
+}
+
+.center{
+ text-align:center;
+ margin-top:100px;
+}
+
+.btn{
+ display:block;
+ margin:20px auto;
+ width:200px;
+ padding:15px;
+ background:black;
+ color:white;
+ text-decoration:none;
+ border-radius:10px;
+}
+
+#map{
+ height:100vh;
+ width:100%;
+}
+
+.panel{
+ position:absolute;
+ bottom:0;
+ left:0;
+ width:100%;
+ background:white;
+ padding:15px;
+ box-shadow:0 -2px 10px rgba(0,0,0,0.3);
+}
+
+input,select,button{
+ width:100%;
+ margin-bottom:8px;
+ padding:10px;
+ font-size:14px;
+}
