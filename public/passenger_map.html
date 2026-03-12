@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>AzTaxi Passenger</title>
+</head>
+<body>
+<h2>Passenger App</h2>
+<button onclick="requestRide()">Ride Request</button>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+const socket = io();
+
+function requestRide(){
+    socket.emit("request-ride",{pickup:"A",drop:"B",package:"Ekonom"});
+    alert("Ride requested");
+}
+</script>
+</body>
+</html>
