@@ -3,7 +3,8 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Driver</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AzTaxi Driver</title>
 <link rel="stylesheet" href="../css/style.css">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 </head>
@@ -11,21 +12,18 @@
 
 <div id="map"></div>
 
-<div class="driver-ui">
+<div class="driver-panel">
 
-<button onclick="goOnline()">Go Online</button>
+<h2>🚖 Driver Panel</h2>
 
-<div id="orders"></div>
-
-<div id="rating">
-Driver Rating: ⭐⭐⭐⭐☆
-</div>
+<button class="online">Go Online</button>
+<button class="accept">Accept Ride</button>
+<button class="finish">Finish Ride</button>
 
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="/socket.io/socket.io.js"></script>
-<script src="../js/driver.js"></script>
+<script src="../js/map.js"></script>
 
 </body>
 </html>

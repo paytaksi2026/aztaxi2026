@@ -3,7 +3,8 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Passenger</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AzTaxi Passenger</title>
 <link rel="stylesheet" href="../css/style.css">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 </head>
@@ -11,32 +12,38 @@
 
 <div id="map"></div>
 
-<div class="bottom-ui">
+<div class="app-panel">
 
-<input placeholder="Haradan">
-<input placeholder="Haraya">
+<h2>🚕 AzTaxi</h2>
 
-<input placeholder="Promo code">
+<input placeholder="📍 Haradan">
+<input placeholder="📍 Haraya">
 
-<select>
-<option>Cash</option>
-<option>Card</option>
-</select>
+<div class="cars">
 
-<button id="rideBtn">Ride Request</button>
-
-<div id="history"></div>
-
-<div class="chat">
-<input id="msg" placeholder="Mesaj">
-<button onclick="sendMsg()">Send</button>
+<div class="car eco">
+🚗 Ekonom
+<span>3.20 AZN</span>
 </div>
+
+<div class="car comfort">
+🚙 Komfort
+<span>4.50 AZN</span>
+</div>
+
+<div class="car premium">
+🚘 Premium
+<span>6.80 AZN</span>
+</div>
+
+</div>
+
+<button class="ride-btn">Ride Request</button>
 
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="/socket.io/socket.io.js"></script>
-<script src="../js/passenger.js"></script>
+<script src="../js/map.js"></script>
 
 </body>
 </html>
