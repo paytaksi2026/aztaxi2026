@@ -12,12 +12,14 @@ width:100%;
 .ride-panel{
 position:absolute;
 bottom:0;
+left:0;
 width:100%;
 background:white;
 padding:20px;
 border-top-left-radius:20px;
 border-top-right-radius:20px;
 box-shadow:0 -2px 10px rgba(0,0,0,0.2);
+z-index:1000;
 }
 
 .packages{
@@ -32,7 +34,6 @@ border:2px solid #ddd;
 padding:10px;
 border-radius:10px;
 text-align:center;
-cursor:pointer;
 }
 
 .card.active{
@@ -47,5 +48,18 @@ border:none;
 padding:15px;
 font-size:18px;
 border-radius:10px;
+cursor:pointer;
+}
+
+#locBtn{
+position:absolute;
+top:20px;
+right:20px;
+z-index:1200;
+padding:10px 14px;
+border:none;
+border-radius:8px;
+background:white;
+box-shadow:0 2px 6px rgba(0,0,0,0.3);
 cursor:pointer;
 }
