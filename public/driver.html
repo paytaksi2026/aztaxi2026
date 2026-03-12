@@ -1,32 +1,21 @@
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
 <title>AzTaxi Driver</title>
+<link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-<h2>Driver Panel</h2>
-<button onclick="online()">Go Online</button>
 
-<div id="rides"></div>
+<h2>Driver Panel</h2>
+
+<button onclick="goOnline()">Go Online</button>
+
+<div id="orders"></div>
 
 <script src="/socket.io/socket.io.js"></script>
-<script>
-const socket = io();
+<script src="/js/driver.js"></script>
 
-function online(){
-    socket.emit("driver-online",{name:"Driver"});
-}
-
-socket.on("new-ride",(data)=>{
-    const div=document.getElementById("rides");
-    const btn=document.createElement("button");
-    btn.innerText="Accept Ride "+data.rideId;
-    btn.onclick=()=>{
-        socket.emit("accept-ride",{rideId:data.rideId});
-    };
-    div.appendChild(btn);
-});
-</script>
 </body>
 </html>
