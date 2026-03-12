@@ -11,6 +11,7 @@ app.use(express.static("public"));
 app.use(express.json());
 
 let drivers={};
+let rides={};
 
 function distance(a,b){
  const dx=a.lat-b.lat;
@@ -44,8 +45,12 @@ io.on("connection",socket=>{
 
  });
 
+ socket.on("ride-accept",ride=>{
+   io.emit("ride-accepted",ride);
+ });
+
 });
 
 server.listen(process.env.PORT||3000,()=>{
- console.log("AzTaxi V6 running");
+ console.log("AzTaxi V7 running");
 });
