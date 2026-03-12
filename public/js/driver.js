@@ -1,7 +1,7 @@
 
 const socket=io();
 
-function goOnline(){
+function online(){
 
 navigator.geolocation.watchPosition(pos=>{
 
@@ -14,12 +14,12 @@ lng:pos.coords.longitude
 
 }
 
-socket.on("ride-request",req=>{
+socket.on("ride-offer",req=>{
 
 let div=document.getElementById("orders");
 
 let btn=document.createElement("button");
-btn.innerText="Accept Ride";
+btn.innerText="Ride qəbul et";
 
 div.appendChild(btn);
 

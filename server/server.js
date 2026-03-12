@@ -11,38 +11,36 @@ app.use(express.static("public"));
 app.use(express.json());
 
 let drivers={};
-let passengers={};
 
-function distance(a,b){
+function dist(a,b){
 const dx=a.lat-b.lat;
 const dy=a.lng-b.lng;
 return Math.sqrt(dx*dx+dy*dy)*111;
 }
 
-io.on("connection",(socket)=>{
+io.on("connection",socket=>{
 
-socket.on("driver-location",(data)=>{
+socket.on("driver-location",data=>{
 drivers[socket.id]=data;
 socket.broadcast.emit("driver-update",{id:socket.id,...data});
 });
 
-socket.on("passenger-request",(req)=>{
+socket.on("ride-request",req=>{
 
-let nearby=[];
+let near=[];
 
 for(let id in drivers){
-let d=distance(req,drivers[id]);
-if(d<3){
-nearby.push(id);
+if(dist(req,drivers[id])<3){
+near.push(id);
 }
 }
 
-nearby.forEach(id=>{
-io.to(id).emit("ride-request",req);
+near.forEach(id=>{
+io.to(id).emit("ride-offer",req);
 });
 
 });
 
 });
 
-server.listen(3000,()=>console.log("AzTaxi server running"));
+server.listen(3000,()=>console.log("AzTaxi running"));
