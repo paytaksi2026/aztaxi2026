@@ -29,12 +29,17 @@ socket.on("ride-offer",(ride)=>{
  let div=document.getElementById("orders");
 
  let btn=document.createElement("button");
+
  btn.innerText="Ride qəbul et";
 
  btn.onclick=()=>{
-   socket.emit("ride-accept",ride);
+  socket.emit("ride-accept",ride);
  };
 
  div.appendChild(btn);
 
 });
+
+function finishRide(){
+ socket.emit("ride-finished",{status:"done"});
+}
