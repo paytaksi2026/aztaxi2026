@@ -1,0 +1,9 @@
+
+{
+"name":"AzTaxi",
+"short_name":"AzTaxi",
+"start_url":"/passenger.html",
+"display":"standalone",
+"background_color":"#ffffff",
+"description":"AzTaxi App"
+}

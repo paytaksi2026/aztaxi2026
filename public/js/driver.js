@@ -1,22 +1,26 @@
 
-const socket = io();
+const socket=io();
 
 function goOnline(){
-    socket.emit("driver-online",{name:"Driver"});
+
+navigator.geolocation.watchPosition(pos=>{
+
+socket.emit("driver-location",{
+lat:pos.coords.latitude,
+lng:pos.coords.longitude
+});
+
+});
+
 }
 
-socket.on("new-ride",(ride)=>{
+socket.on("ride-request",req=>{
 
-    const box = document.getElementById("orders");
+let div=document.getElementById("orders");
 
-    const btn = document.createElement("button");
+let btn=document.createElement("button");
+btn.innerText="Accept Ride";
 
-    btn.innerText = "Accept ride "+ride.rideId;
-
-    btn.onclick = ()=>{
-        socket.emit("ride-accept",ride.rideId);
-    };
-
-    box.appendChild(btn);
+div.appendChild(btn);
 
 });
