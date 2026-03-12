@@ -1,5 +1,0 @@
-
-Ride: 1001
-Amount: 6.80 AZN
-Method: Card
-Time: 2026-01-01T12:00:00
