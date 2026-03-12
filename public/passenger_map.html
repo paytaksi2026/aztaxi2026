@@ -11,20 +11,25 @@
 
 <div id="map"></div>
 
-<button id="locBtn">📍 My Location</button>
+<div class="panel">
 
-<div class="ride-panel">
+<input id="pickup" placeholder="Pickup location">
+<input id="drop" placeholder="Where to go?">
+
 <div class="packages">
-<div class="card active"><h3>Ekonom</h3><p>3 AZN</p></div>
-<div class="card"><h3>Komfort</h3><p>4 AZN</p></div>
-<div class="card"><h3>Premium</h3><p>7 AZN</p></div>
+<div class="card active" data-price="0.6">Ekonom</div>
+<div class="card" data-price="0.8">Komfort</div>
+<div class="card" data-price="1.2">Premium</div>
 </div>
 
-<button class="ride-btn">Ride Request</button>
+<div id="price">Price: -</div>
+
+<button onclick="createRoute()">Calculate Route</button>
+
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="/js/map.js"></script>
+<script src="/js/app.js"></script>
 
 </body>
 </html>
