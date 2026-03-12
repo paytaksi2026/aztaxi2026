@@ -1,36 +1,39 @@
 
-const express = require("express");
-const http = require("http");
-const { Server } = require("socket.io");
+const express=require("express");
+const http=require("http");
+const {Server}=require("socket.io");
 
-const app = express();
-const server = http.createServer(app);
-const io = new Server(server);
+const app=express();
+const server=http.createServer(app);
+const io=new Server(server);
 
 app.use(express.static("public"));
 app.use(express.json());
 
-let drivers = {};
+let drivers={};
+let rides={};
 
-function dist(a,b){
- const dx = a.lat-b.lat;
- const dy = a.lng-b.lng;
+function distance(a,b){
+ const dx=a.lat-b.lat;
+ const dy=a.lng-b.lng;
  return Math.sqrt(dx*dx+dy*dy)*111;
 }
 
-io.on("connection",(socket)=>{
+io.on("connection",socket=>{
 
- socket.on("driver-location",(data)=>{
+ socket.on("driver-location",data=>{
    drivers[socket.id]=data;
    io.emit("driver-update",{id:socket.id,...data});
  });
 
- socket.on("ride-request",(ride)=>{
+ socket.on("ride-request",ride=>{
+
+   rides[socket.id]=ride;
 
    let near=[];
 
    for(let id in drivers){
-     if(dist(ride,drivers[id])<3){
+     if(distance(ride,drivers[id])<3){
        near.push(id);
      }
    }
@@ -41,8 +44,16 @@ io.on("connection",(socket)=>{
 
  });
 
+ socket.on("ride-accept",ride=>{
+   io.emit("ride-accepted",ride);
+ });
+
+ socket.on("ride-finish",ride=>{
+   io.emit("ride-finished",ride);
+ });
+
 });
 
 server.listen(process.env.PORT||3000,()=>{
- console.log("AzTaxi server running");
+ console.log("AzTaxi PRO running");
 });

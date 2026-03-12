@@ -1,52 +1,16 @@
 
-body{
-margin:0;
-font-family:Arial;
-}
+body{margin:0;font-family:Arial}
 
-.home{
-text-align:center;
-margin-top:120px;
-}
+.home{text-align:center;margin-top:100px}
 
-.btn{
-display:block;
-width:220px;
-margin:20px auto;
-padding:15px;
-background:black;
-color:white;
-text-decoration:none;
-border-radius:10px;
-}
+.btn{display:block;width:200px;margin:20px auto;padding:15px;background:black;color:white;text-decoration:none;border-radius:10px}
 
-#map{
-height:100vh;
-width:100%;
-}
+.auth{width:300px;margin:100px auto}
 
-.panel{
-position:absolute;
-bottom:0;
-left:0;
-width:100%;
-background:white;
-padding:15px;
-box-shadow:0 -2px 10px rgba(0,0,0,0.3);
-}
+#map{height:100vh;width:100%}
 
-.driverPanel{
-position:absolute;
-bottom:0;
-left:0;
-width:100%;
-background:white;
-padding:15px;
-}
+.panel{position:absolute;bottom:0;width:100%;background:white;padding:15px}
 
-input,select,button{
-width:100%;
-margin-bottom:8px;
-padding:10px;
-font-size:14px;
-}
+.driverPanel{position:absolute;bottom:0;width:100%;background:white;padding:10px}
+
+input,select,button{width:100%;margin-bottom:8px;padding:10px}

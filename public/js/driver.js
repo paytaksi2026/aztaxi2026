@@ -1,5 +1,5 @@
 
-const socket = io();
+const socket=io();
 
 let map=L.map('map').setView([40.4093,49.8671],13);
 
@@ -24,13 +24,6 @@ function goOnline(){
 
 }
 
-socket.on("ride-offer",(ride)=>{
-
- let div=document.getElementById("orders");
-
- let btn=document.createElement("button");
- btn.innerText="Ride qəbul et";
-
- div.appendChild(btn);
-
-});
+function finishRide(){
+ socket.emit("ride-finish",{status:"done"});
+}
