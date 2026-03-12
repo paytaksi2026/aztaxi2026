@@ -4,24 +4,39 @@
 <head>
 <meta charset="utf-8">
 <title>AzTaxi Passenger</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 
-<h2>Passenger</h2>
+<div id="map"></div>
 
-<select id="package">
-<option>Ekonom</option>
-<option>Komfort</option>
-<option>Premium</option>
-</select>
+<div class="ride-panel">
+<div class="packages">
 
-<button onclick="requestRide()">Ride Request</button>
+<div class="card active">
+<h3>Ekonom</h3>
+<p>3 AZN</p>
+</div>
 
-<div id="status"></div>
+<div class="card">
+<h3>Komfort</h3>
+<p>4 AZN</p>
+</div>
 
-<script src="/socket.io/socket.io.js"></script>
-<script src="/js/passenger.js"></script>
+<div class="card">
+<h3>Premium</h3>
+<p>7 AZN</p>
+</div>
+
+</div>
+
+<button class="ride-btn">Ride Request</button>
+
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="/js/map.js"></script>
 
 </body>
 </html>

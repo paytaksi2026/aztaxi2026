@@ -4,18 +4,24 @@
 <head>
 <meta charset="utf-8">
 <title>AzTaxi Driver</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 
-<h2>Driver Panel</h2>
+<div id="map"></div>
 
-<button onclick="goOnline()">Go Online</button>
+<div class="ride-panel">
+<h3>Driver Panel</h3>
+<button class="ride-btn">Go Online</button>
+</div>
 
-<div id="orders"></div>
-
-<script src="/socket.io/socket.io.js"></script>
-<script src="/js/driver.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+var map = L.map('map').setView([40.4093,49.8671], 13);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19}).addTo(map);
+L.marker([40.4093,49.8671]).addTo(map);
+</script>
 
 </body>
 </html>
