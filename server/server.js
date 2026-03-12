@@ -8,40 +8,48 @@ const server = http.createServer(app);
 const io = new Server(server);
 
 app.use(express.static("public"));
+app.use(express.json());
 
 let drivers = {};
+let rides = {};
 
-function distance(a,b){
- const dx = a.lat - b.lat;
- const dy = a.lng - b.lng;
- return Math.sqrt(dx*dx + dy*dy) * 111;
+function dist(a,b){
+ const dx = a.lat-b.lat;
+ const dy = a.lng-b.lng;
+ return Math.sqrt(dx*dx+dy*dy)*111;
 }
 
 io.on("connection",(socket)=>{
 
  socket.on("driver-location",(data)=>{
-  drivers[socket.id] = data;
-  socket.broadcast.emit("driver-update",{id:socket.id,...data});
+   drivers[socket.id]=data;
+   io.emit("driver-update",{id:socket.id,...data});
  });
 
- socket.on("ride-request",(req)=>{
+ socket.on("ride-request",(ride)=>{
 
-  let near = [];
+   rides[socket.id]=ride;
 
-  for(let id in drivers){
-   if(distance(req,drivers[id]) < 3){
-    near.push(id);
+   let near=[];
+
+   for(let id in drivers){
+     if(dist(ride,drivers[id])<3){
+       near.push(id);
+     }
    }
-  }
 
-  near.forEach(id=>{
-   io.to(id).emit("ride-offer",req);
-  });
+   near.forEach(id=>{
+     io.to(id).emit("ride-offer",ride);
+   });
 
+ });
+
+ socket.on("ride-accept",(ride)=>{
+   io.emit("ride-accepted",ride);
  });
 
 });
 
-server.listen(process.env.PORT || 3000,()=>{
- console.log("AzTaxi server running");
+server.listen(process.env.PORT||3000,()=>{
+ console.log("AzTaxi PRO running");
 });

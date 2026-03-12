@@ -1,7 +1,7 @@
 
 const socket = io();
 
-let map = L.map('map').setView([40.4093,49.8671],7);
+let map = L.map('map').setView([40.4093,49.8671],13);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19}).addTo(map);
 
@@ -12,39 +12,50 @@ let route=null;
 map.on("click",(e)=>{
 
  if(!pickup){
-  pickup = L.marker(e.latlng).addTo(map);
+  pickup=L.marker(e.latlng).addTo(map);
  }else{
   if(drop) map.removeLayer(drop);
-  drop = L.marker(e.latlng).addTo(map);
+  drop=L.marker(e.latlng).addTo(map);
  }
 
 });
 
 async function calculate(){
 
- if(!pickup || !drop) return;
+ if(!pickup||!drop) return;
 
- let p = pickup.getLatLng();
- let d = drop.getLatLng();
+ let p=pickup.getLatLng();
+ let d=drop.getLatLng();
 
  let url=`https://router.project-osrm.org/route/v1/driving/${p.lng},${p.lat};${d.lng},${d.lat}?overview=full&geometries=geojson`;
 
- let data = await fetch(url).then(r=>r.json());
+ let data=await fetch(url).then(r=>r.json());
 
- let coords = data.routes[0].geometry.coordinates.map(c=>[c[1],c[0]]);
+ let coords=data.routes[0].geometry.coordinates.map(c=>[c[1],c[0]]);
 
  if(route) map.removeLayer(route);
 
- route = L.polyline(coords,{color:"black"}).addTo(map);
+ route=L.polyline(coords,{color:"black"}).addTo(map);
 
- let km = data.routes[0].distance/1000;
+ let km=data.routes[0].distance/1000;
 
- let rate = parseFloat(document.getElementById("package").value);
+ let active=document.querySelector(".car.active");
 
- let price = (km * rate).toFixed(2);
+ let rate=parseFloat(active.dataset.rate);
 
- document.getElementById("price").innerText = "Qiymət: " + price + " AZN";
+ let price=(km*rate).toFixed(2);
+
+ document.getElementById("price").innerText="Qiymət: "+price+" AZN";
 
  socket.emit("ride-request",{lat:p.lat,lng:p.lng});
 
 }
+
+document.querySelectorAll(".car").forEach(c=>{
+
+ c.onclick=function(){
+   document.querySelectorAll(".car").forEach(x=>x.classList.remove("active"));
+   this.classList.add("active");
+ }
+
+});

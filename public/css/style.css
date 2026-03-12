@@ -4,15 +4,15 @@ body{
  font-family:Arial;
 }
 
-.center{
+.home{
  text-align:center;
  margin-top:100px;
 }
 
 .btn{
  display:block;
- margin:20px auto;
  width:200px;
+ margin:20px auto;
  padding:15px;
  background:black;
  color:white;
@@ -39,5 +39,31 @@ input,select,button{
  width:100%;
  margin-bottom:8px;
  padding:10px;
- font-size:14px;
+}
+
+.cars{
+ display:flex;
+ gap:8px;
+}
+
+.car{
+ flex:1;
+ border:2px solid #ddd;
+ padding:10px;
+ text-align:center;
+ cursor:pointer;
+}
+
+.car.active{
+ border-color:black;
+ background:#eee;
+}
+
+.driverPanel{
+ position:absolute;
+ bottom:0;
+ left:0;
+ width:100%;
+ background:white;
+ padding:10px;
 }

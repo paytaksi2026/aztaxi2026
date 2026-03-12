@@ -4,16 +4,22 @@
 <head>
 <meta charset="utf-8">
 <title>Driver</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 
-<h2>Driver Panel</h2>
+<div id="map"></div>
+
+<div class="driverPanel">
 
 <button onclick="goOnline()">Online</button>
 
-<div id="rides"></div>
+<div id="orders"></div>
 
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/driver.js"></script>
 
