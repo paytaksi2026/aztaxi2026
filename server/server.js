@@ -12,7 +12,7 @@ app.use(express.json());
 
 let drivers={};
 let rides={};
-let balances={};
+let messages={};
 
 function distance(a,b){
  const dx=a.lat-b.lat;
@@ -29,42 +29,34 @@ io.on("connection",socket=>{
 
  socket.on("ride-request",ride=>{
 
-   let bestDriver=null;
-   let bestDistance=999;
+   let best=null;
+   let bestDist=999;
 
    for(let id in drivers){
      let d=distance(ride,drivers[id]);
-     if(d<bestDistance){
-       bestDistance=d;
-       bestDriver=id;
+     if(d<bestDist){
+       bestDist=d;
+       best=id;
      }
    }
 
-   if(bestDriver){
-     rides[bestDriver]=ride;
-     io.to(bestDriver).emit("ride-offer",ride);
+   if(best){
+     rides[best]=ride;
+     io.to(best).emit("ride-offer",ride);
    }
 
  });
 
- socket.on("ride-accept",ride=>{
-   io.emit("ride-started",ride);
+ socket.on("chat-message",msg=>{
+   io.emit("chat-message",msg);
  });
 
- socket.on("ride-finish",data=>{
-
-   let driver=data.driver;
-
-   if(!balances[driver]) balances[driver]=0;
-
-   balances[driver]+=data.price || 5;
-
-   io.emit("ride-finished",data);
-
+ socket.on("ride-finish",ride=>{
+   io.emit("ride-finished",ride);
  });
 
 });
 
 server.listen(process.env.PORT||3000,()=>{
- console.log("AzTaxi V11 running");
+ console.log("AzTaxi V12 running");
 });
