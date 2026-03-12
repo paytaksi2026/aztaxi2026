@@ -1,6 +1,6 @@
 
 {
-"name":"aztaxi-v5",
+"name":"aztaxi-v6",
 "version":"1.0.0",
 "main":"server/server.js",
 "scripts":{"start":"node server/server.js"},

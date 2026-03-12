@@ -5,6 +5,8 @@
 <meta charset="utf-8">
 <title>Passenger</title>
 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <link rel="stylesheet" href="../css/style.css">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 
@@ -13,20 +15,23 @@
 
 <div id="map"></div>
 
-<div class="panel">
+<div class="bottom-sheet">
 
 <input id="pickup" placeholder="Haradan">
 <input id="drop" placeholder="Haraya">
 
-<div id="suggestions"></div>
+<div class="cars">
+<div class="car active">Ekonom</div>
+<div class="car">Komfort</div>
+<div class="car">Premium</div>
+</div>
 
 <select id="payment">
 <option>Cash</option>
-<option>Card (Stripe)</option>
+<option>Card</option>
 </select>
 
-<button onclick="navigate()">Naviqasiya</button>
-<button onclick="requestRide()">Ride Request</button>
+<button id="rideBtn">Ride Request</button>
 
 </div>
 

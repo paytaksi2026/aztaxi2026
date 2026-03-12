@@ -11,7 +11,6 @@ app.use(express.static("public"));
 app.use(express.json());
 
 let drivers={};
-let rides={};
 
 function distance(a,b){
  const dx=a.lat-b.lat;
@@ -19,14 +18,14 @@ function distance(a,b){
  return Math.sqrt(dx*dx+dy*dy)*111;
 }
 
-io.on("connection",(socket)=>{
+io.on("connection",socket=>{
 
- socket.on("driver-location",(data)=>{
+ socket.on("driver-location",data=>{
    drivers[socket.id]=data;
    io.emit("driver-update",{id:socket.id,...data});
  });
 
- socket.on("ride-request",(ride)=>{
+ socket.on("ride-request",ride=>{
 
    let bestDriver=null;
    let bestDistance=999;
@@ -48,5 +47,5 @@ io.on("connection",(socket)=>{
 });
 
 server.listen(process.env.PORT||3000,()=>{
- console.log("AzTaxi V5 running");
+ console.log("AzTaxi V6 running");
 });

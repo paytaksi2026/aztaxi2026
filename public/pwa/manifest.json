@@ -3,6 +3,5 @@
   "short_name": "AzTaxi",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "description": "AzTaxi Taxi App"
+  "background_color": "#ffffff"
 }

@@ -23,13 +23,3 @@ socket.emit("driver-location",{lat,lng});
 });
 
 }
-
-socket.on("ride-offer",(ride)=>{
-
-let btn=document.createElement("button");
-
-btn.innerText="Ride qəbul et";
-
-document.getElementById("orders").appendChild(btn);
-
-});
