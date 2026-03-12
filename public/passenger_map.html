@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>AzTaxi Passenger</title>
+<title>AzTaxi</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <link rel="stylesheet" href="/css/style.css">
 </head>
@@ -13,23 +13,23 @@
 
 <div class="panel">
 
-<input id="pickup" placeholder="Pickup location">
-<input id="drop" placeholder="Where to go?">
+<input id="pickup" placeholder="Haradan">
+<input id="drop" placeholder="Haraya">
 
 <div class="packages">
-<div class="card active" data-price="0.6">Ekonom</div>
-<div class="card" data-price="0.8">Komfort</div>
-<div class="card" data-price="1.2">Premium</div>
+<div class="card active" data-rate="0.6">Ekonom</div>
+<div class="card" data-rate="0.8">Komfort</div>
+<div class="card" data-rate="1.2">Premium</div>
 </div>
 
-<div id="price">Price: -</div>
+<div id="price">Qiymət: -</div>
 
-<button onclick="createRoute()">Calculate Route</button>
+<button onclick="calcRoute()">Marşrut Hesabla</button>
 
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="/js/app.js"></script>
+<script src="/js/route.js"></script>
 
 </body>
 </html>
