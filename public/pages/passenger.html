@@ -5,8 +5,8 @@
 <meta charset="utf-8">
 <title>Passenger</title>
 
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 
 </head>
 <body>
@@ -18,18 +18,15 @@
 <input id="pickup" placeholder="Haradan">
 <input id="drop" placeholder="Haraya">
 
-<div class="cars">
-<div class="car active">Ekonom</div>
-<div class="car">Komfort</div>
-<div class="car">Premium</div>
-</div>
+<div id="suggestions"></div>
 
-<select>
+<select id="payment">
 <option>Cash</option>
-<option>Card</option>
+<option>Card (Stripe)</option>
 </select>
 
-<button>Ride Request</button>
+<button onclick="navigate()">Naviqasiya</button>
+<button onclick="requestRide()">Ride Request</button>
 
 </div>
 

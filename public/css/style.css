@@ -5,12 +5,10 @@ body{margin:0;font-family:Arial}
 
 .btn{display:block;width:200px;margin:20px auto;padding:15px;background:black;color:white;text-decoration:none;border-radius:10px}
 
-.auth{width:300px;margin:100px auto}
-
 #map{height:100vh;width:100%}
 
 .panel{position:absolute;bottom:0;width:100%;background:white;padding:15px}
 
 .driverPanel{position:absolute;bottom:0;width:100%;background:white;padding:10px}
 
-input,select,button{width:100%;margin-bottom:8px;padding:10px}
+input,button,select{width:100%;margin-bottom:8px;padding:10px}

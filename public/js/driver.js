@@ -9,21 +9,27 @@ let marker=null;
 
 function goOnline(){
 
- navigator.geolocation.watchPosition(pos=>{
+navigator.geolocation.watchPosition(pos=>{
 
-  let lat=pos.coords.latitude;
-  let lng=pos.coords.longitude;
+let lat=pos.coords.latitude;
+let lng=pos.coords.longitude;
 
-  if(marker) map.removeLayer(marker);
+if(marker) map.removeLayer(marker);
 
-  marker=L.marker([lat,lng]).addTo(map);
+marker=L.marker([lat,lng]).addTo(map);
 
-  socket.emit("driver-location",{lat,lng});
+socket.emit("driver-location",{lat,lng});
 
- });
+});
 
 }
 
-function finishRide(){
- socket.emit("ride-finish",{status:"done"});
-}
+socket.on("ride-offer",(ride)=>{
+
+let btn=document.createElement("button");
+
+btn.innerText="Ride qəbul et";
+
+document.getElementById("orders").appendChild(btn);
+
+});

@@ -1,9 +1,8 @@
-
 {
-"name":"AzTaxi",
-"short_name":"AzTaxi",
-"start_url":"/",
-"display":"standalone",
-"background_color":"#ffffff",
-"description":"AzTaxi Ride App"
+  "name": "AzTaxi",
+  "short_name": "AzTaxi",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "description": "AzTaxi Taxi App"
 }

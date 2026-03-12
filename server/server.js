@@ -19,41 +19,34 @@ function distance(a,b){
  return Math.sqrt(dx*dx+dy*dy)*111;
 }
 
-io.on("connection",socket=>{
+io.on("connection",(socket)=>{
 
- socket.on("driver-location",data=>{
+ socket.on("driver-location",(data)=>{
    drivers[socket.id]=data;
    io.emit("driver-update",{id:socket.id,...data});
  });
 
- socket.on("ride-request",ride=>{
+ socket.on("ride-request",(ride)=>{
 
-   rides[socket.id]=ride;
-
-   let near=[];
+   let bestDriver=null;
+   let bestDistance=999;
 
    for(let id in drivers){
-     if(distance(ride,drivers[id])<3){
-       near.push(id);
+     let d=distance(ride,drivers[id]);
+     if(d<bestDistance){
+       bestDistance=d;
+       bestDriver=id;
      }
    }
 
-   near.forEach(id=>{
-     io.to(id).emit("ride-offer",ride);
-   });
+   if(bestDriver){
+     io.to(bestDriver).emit("ride-offer",ride);
+   }
 
- });
-
- socket.on("ride-accept",ride=>{
-   io.emit("ride-accepted",ride);
- });
-
- socket.on("ride-finish",ride=>{
-   io.emit("ride-finished",ride);
  });
 
 });
 
 server.listen(process.env.PORT||3000,()=>{
- console.log("AzTaxi PRO running");
+ console.log("AzTaxi V5 running");
 });
