@@ -12,6 +12,7 @@ app.use(express.json());
 
 let drivers={};
 let rides={};
+let balances={};
 
 function distance(a,b){
  const dx=a.lat-b.lat;
@@ -50,12 +51,20 @@ io.on("connection",socket=>{
    io.emit("ride-started",ride);
  });
 
- socket.on("ride-finish",ride=>{
-   io.emit("ride-finished",ride);
+ socket.on("ride-finish",data=>{
+
+   let driver=data.driver;
+
+   if(!balances[driver]) balances[driver]=0;
+
+   balances[driver]+=data.price || 5;
+
+   io.emit("ride-finished",data);
+
  });
 
 });
 
 server.listen(process.env.PORT||3000,()=>{
- console.log("AzTaxi V10 running");
+ console.log("AzTaxi V11 running");
 });

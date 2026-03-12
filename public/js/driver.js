@@ -27,7 +27,6 @@ socket.emit("driver-location",{lat,lng});
 socket.on("ride-offer",(ride)=>{
 
 let btn=document.createElement("button");
-
 btn.innerText="Ride qəbul et";
 
 btn.onclick=()=>{
@@ -39,5 +38,9 @@ document.getElementById("orders").appendChild(btn);
 });
 
 function finishRide(){
- socket.emit("ride-finish",{status:"done"});
+
+socket.emit("ride-finish",{driver:"driver1",price:5});
+
+document.getElementById("balance").innerText="Balans yeniləndi";
+
 }
