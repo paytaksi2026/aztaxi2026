@@ -5,14 +5,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AzTaxi Passenger</title>
-<link rel="stylesheet" href="../css/style.css">
+
+<link rel="stylesheet" href="/css/passenger_app.css">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
 </head>
 <body>
 
 <div id="map"></div>
 
-<div class="app-panel">
+<div class="bottom-sheet" id="sheet">
+
+<div class="handle"></div>
 
 <h2>🚕 AzTaxi</h2>
 
@@ -21,29 +25,18 @@
 
 <div class="cars">
 
-<div class="car eco">
-🚗 Ekonom
-<span>3.20 AZN</span>
-</div>
-
-<div class="car comfort">
-🚙 Komfort
-<span>4.50 AZN</span>
-</div>
-
-<div class="car premium">
-🚘 Premium
-<span>6.80 AZN</span>
-</div>
+<div class="car eco">🚗 Ekonom <span>3.20 AZN</span></div>
+<div class="car comfort">🚙 Komfort <span>4.50 AZN</span></div>
+<div class="car premium">🚘 Premium <span>6.80 AZN</span></div>
 
 </div>
 
-<button class="ride-btn">Ride Request</button>
+<button class="ride">Ride Request</button>
 
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="../js/map.js"></script>
+<script src="/js/passenger_app.js"></script>
 
 </body>
 </html>
