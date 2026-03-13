@@ -1,6 +1,6 @@
 
 {
-"name":"aztaxi-pro",
+"name":"aztaxi-uber-platform",
 "version":"1.0.0",
 "main":"server/server.js",
 "scripts":{"start":"node server/server.js"},
