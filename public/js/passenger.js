@@ -1,43 +1,32 @@
 
+const socket=io();
+
 let map=L.map('map').setView([40.4093,49.8671],13)
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-maxZoom:19
-}).addTo(map)
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19}).addTo(map)
 
-let pickupMarker=null
-let routeLine=null
+let driverMarkers={}
 
-map.on("click",e=>{
+socket.on("drivers",data=>{
 
-if(!pickupMarker){
+ for(let id in data){
 
-pickupMarker=L.marker(e.latlng).addTo(map)
+  if(driverMarkers[id]){
 
-}else{
+   driverMarkers[id].setLatLng([data[id].lat,data[id].lng])
 
-if(routeLine) map.removeLayer(routeLine)
+  }else{
 
-routeLine=L.polyline([pickupMarker.getLatLng(),e.latlng],{color:"black"}).addTo(map)
+   driverMarkers[id]=L.marker([data[id].lat,data[id].lng]).addTo(map)
 
-document.getElementById("driverCard").style.display="block"
+  }
 
-}
+ }
 
 })
 
-document.querySelector(".ride").onclick=()=>{
+function requestRide(){
 
-setTimeout(()=>{
-
-document.getElementById("rating").style.display="block"
-
-},4000)
-
-}
-
-function closeRating(){
-
-document.getElementById("rating").style.display="none"
+ socket.emit("ride-request",{lat:40.4093,lng:49.8671})
 
 }

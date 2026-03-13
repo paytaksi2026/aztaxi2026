@@ -2,28 +2,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AzTaxi Driver</title>
-<link rel="stylesheet" href="../css/style.css">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="/css/style.css">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 </head>
+
 <body>
 
 <div id="map"></div>
 
-<div class="driver-panel">
+<div class="driverpanel">
 
-<h2>🚖 Driver Panel</h2>
+<button onclick="goOnline()">Go Online</button>
 
-<button class="online">Go Online</button>
-<button class="accept">Accept Ride</button>
-<button class="finish">Finish Ride</button>
+<div id="ride"></div>
 
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="../js/map.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/driver.js"></script>
 
 </body>
 </html>

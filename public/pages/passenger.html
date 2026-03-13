@@ -2,57 +2,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AzTaxi Passenger</title>
-
-<link rel="stylesheet" href="/css/app.css">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="/css/style.css">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-
 </head>
+
 <body>
 
 <div id="map"></div>
 
-<div class="sheet" id="sheet">
+<div class="panel">
 
-<div class="handle"></div>
+<input id="pickup" placeholder="Pickup address">
+<input id="drop" placeholder="Destination">
 
-<h2>🚕 AzTaxi</h2>
+<div id="price">Price: -- AZN</div>
 
-<input id="pickup" placeholder="📍 Haradan">
-<input id="drop" placeholder="📍 Haraya">
+<button onclick="requestRide()">Request Ride</button>
 
-<div class="cars">
-
-<div class="car eco">🚗 Ekonom</div>
-<div class="car comfort">🚙 Komfort</div>
-<div class="car premium">🚘 Premium</div>
-
-</div>
-
-<select id="payment">
-<option>💵 Cash</option>
-<option>💳 Card</option>
-</select>
-
-<button class="ride">Ride Request</button>
-
-<div id="driverCard" class="driver-card">
-👤 Driver: Murad
-⭐ 4.9 rating
-🚘 Toyota Prius
-</div>
-
-</div>
-
-<div id="rating" class="rating">
-⭐ Ride finished
-<div class="stars">★★★★★</div>
-<button onclick="closeRating()">OK</button>
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="/socket.io/socket.io.js"></script>
 <script src="/js/passenger.js"></script>
 
 </body>
