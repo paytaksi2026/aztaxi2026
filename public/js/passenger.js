@@ -1,29 +1,15 @@
 
-const socket=io();
+const socket=io()
 
 let map=L.map('map').setView([40.4093,49.8671],13)
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19}).addTo(map)
 
-let driverMarkers={}
+let pickupInput=document.getElementById("pickup")
+let dropInput=document.getElementById("drop")
 
-socket.on("drivers",data=>{
-
- for(let id in data){
-
-  if(driverMarkers[id]){
-
-   driverMarkers[id].setLatLng([data[id].lat,data[id].lng])
-
-  }else{
-
-   driverMarkers[id]=L.marker([data[id].lat,data[id].lng]).addTo(map)
-
-  }
-
- }
-
-})
+new google.maps.places.Autocomplete(pickupInput)
+new google.maps.places.Autocomplete(dropInput)
 
 function requestRide(){
 

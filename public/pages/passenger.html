@@ -3,8 +3,13 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="stylesheet" href="/css/style.css">
+<title>AzTaxi Passenger</title>
+
+<link rel="stylesheet" href="/css/app.css">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_KEY&libraries=places"></script>
+
 </head>
 
 <body>
@@ -13,16 +18,21 @@
 
 <div class="panel">
 
-<input id="pickup" placeholder="Pickup address">
+<input id="pickup" placeholder="Pickup location">
 <input id="drop" placeholder="Destination">
 
-<div id="price">Price: -- AZN</div>
+<div id="distance"></div>
+<div id="price"></div>
 
-<button onclick="requestRide()">Request Ride</button>
+<select id="payment">
+<option>Cash</option>
+<option>Stripe Card</option>
+</select>
+
+<button onclick="requestRide()">Ride Request</button>
 
 </div>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/passenger.js"></script>
 

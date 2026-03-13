@@ -7,88 +7,56 @@ top:0;
 left:0;
 width:100%;
 height:100vh;
-z-index:1;
 }
 
-.sheet{
+.panel{
 position:fixed;
 bottom:0;
 left:0;
 right:0;
-height:420px;
 background:white;
-border-top-left-radius:25px;
-border-top-right-radius:25px;
 padding:20px;
-box-shadow:0 -10px 30px rgba(0,0,0,.3);
-z-index:10;
-transition:transform .25s;
+border-top-left-radius:20px;
+border-top-right-radius:20px;
 }
 
-.handle{
-width:60px;
-height:6px;
-background:#ccc;
-border-radius:10px;
-margin:auto;
-margin-bottom:12px;
+.driverpanel{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+background:white;
+padding:20px;
 }
 
-input,select{
+input{
 width:100%;
-padding:12px;
+padding:10px;
 margin-bottom:10px;
 border-radius:10px;
 border:1px solid #ddd;
 }
 
-.cars{
-display:flex;
-gap:10px;
-margin-bottom:10px;
-}
-
-.car{
-flex:1;
-color:white;
-padding:12px;
-border-radius:12px;
-text-align:center;
-font-weight:bold;
-}
-
-.eco{background:linear-gradient(45deg,#4CAF50,#2ecc71)}
-.comfort{background:linear-gradient(45deg,#2196F3,#03A9F4)}
-.premium{background:linear-gradient(45deg,#9C27B0,#E040FB)}
-
-.ride{
+button{
 width:100%;
-padding:14px;
+padding:12px;
 border:none;
-border-radius:14px;
+border-radius:12px;
 background:linear-gradient(45deg,#ff5722,#ff9800);
 color:white;
 font-size:16px;
 }
 
-.driver-card{
-margin-top:12px;
-padding:12px;
-background:#f3f3f3;
-border-radius:10px;
-display:none;
+.grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:10px;
+padding:20px;
 }
 
-.rating{
-position:fixed;
-top:40%;
-left:50%;
-transform:translate(-50%,-50%);
-background:white;
+.card{
+background:#eee;
 padding:20px;
-border-radius:12px;
-box-shadow:0 10px 30px rgba(0,0,0,.3);
-display:none;
-z-index:999;
+border-radius:10px;
 text-align:center;
 }

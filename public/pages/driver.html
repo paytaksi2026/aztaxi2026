@@ -3,8 +3,11 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="stylesheet" href="/css/style.css">
+<title>Driver</title>
+
+<link rel="stylesheet" href="/css/app.css">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
 </head>
 
 <body>
@@ -17,9 +20,12 @@
 
 <div id="ride"></div>
 
+<div id="balance"></div>
+
+<button onclick="withdraw()">Withdraw</button>
+
 </div>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/driver.js"></script>
 

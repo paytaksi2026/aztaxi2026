@@ -18,8 +18,8 @@ function goOnline(){
 
 }
 
-socket.on("ride-offer",ride=>{
+function withdraw(){
 
- document.getElementById("ride").innerText="New Ride Request"
+ alert("Withdraw request sent")
 
-})
+}
