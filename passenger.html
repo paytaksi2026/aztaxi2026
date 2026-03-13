@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>AzTaxi Passenger</title>
+</head>
+<body>
+
+<h2>AzTaxi Passenger</h2>
+
+Haradan<br>
+<input id="from"><br><br>
+
+Haraya<br>
+<input id="to"><br><br>
+
+Distance (km)<br>
+<input id="distance"><br><br>
+
+Duration (min)<br>
+<input id="duration"><br><br>
+
+<button onclick="calc()">Qiymət Hesabla</button>
+
+<h3 id="price"></h3>
+
+<script>
+async function calc(){
+
+const distance = parseFloat(document.getElementById("distance").value);
+const duration = parseFloat(document.getElementById("duration").value);
+
+const res = await fetch("/api/ride/calculate",{
+method:"POST",
+headers:{'Content-Type':'application/json'},
+body: JSON.stringify({
+distance_km:distance,
+duration_min:duration,
+activeDrivers:10,
+activeRequests:5
+})
+});
+
+const data = await res.json();
+
+document.getElementById("price").innerText =
+"Qiymət: "+data.price+" AZN (surge x"+data.surge_multiplier+")";
+}
+</script>
+
+</body>
+</html>
