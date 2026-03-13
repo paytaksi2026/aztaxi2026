@@ -1,38 +1,43 @@
 
-const socket=io()
-
 let map=L.map('map').setView([40.4093,49.8671],13)
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19}).addTo(map)
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+maxZoom:19
+}).addTo(map)
 
-let markers={}
+let pickupMarker=null
+let routeLine=null
 
-socket.on("drivers-update",drivers=>{
+map.on("click",e=>{
 
- for(let id in drivers){
+if(!pickupMarker){
 
-  if(markers[id]){
+pickupMarker=L.marker(e.latlng).addTo(map)
 
-   markers[id].setLatLng([drivers[id].lat,drivers[id].lng])
+}else{
 
-  }else{
+if(routeLine) map.removeLayer(routeLine)
 
-   markers[id]=L.marker([drivers[id].lat,drivers[id].lng]).addTo(map)
+routeLine=L.polyline([pickupMarker.getLatLng(),e.latlng],{color:"black"}).addTo(map)
 
-  }
+document.getElementById("driverCard").style.display="block"
 
- }
+}
 
 })
 
-let pickup=document.getElementById("pickup")
-let drop=document.getElementById("drop")
+document.querySelector(".ride").onclick=()=>{
 
-new google.maps.places.Autocomplete(pickup)
-new google.maps.places.Autocomplete(drop)
+setTimeout(()=>{
 
-function requestRide(){
+document.getElementById("rating").style.display="block"
 
- socket.emit("ride-request",{lat:40.4093,lng:49.8671})
+},4000)
+
+}
+
+function closeRating(){
+
+document.getElementById("rating").style.display="none"
 
 }
