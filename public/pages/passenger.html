@@ -3,14 +3,10 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AzTaxi Passenger</title>
-
+<title>Passenger App</title>
 <link rel="stylesheet" href="/css/app.css">
-
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-
 <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_KEY&libraries=places"></script>
-
 </head>
 
 <body>
@@ -25,12 +21,12 @@
 <div id="distance"></div>
 <div id="price"></div>
 
-<select id="payment">
+<select>
 <option>Cash</option>
-<option>Stripe Card</option>
+<option>Card (Stripe)</option>
 </select>
 
-<button onclick="requestRide()">Ride Request</button>
+<button onclick="requestRide()">Request Ride</button>
 
 </div>
 
