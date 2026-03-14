@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>AzTaxi Passenger</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<style>
+#map{height:85vh}
+.panel{padding:10px}
+.list{background:#fff;max-height:120px;overflow:auto}
+</style>
+</head>
+<body>
+
+<div class="panel">
+
+<input id="from" placeholder="Haradan">
+<div id="fromList" class="list"></div>
+
+<input id="to" placeholder="Haraya">
+<div id="toList" class="list"></div>
+
+<button onclick="myLoc()">📍 Mənim yerim</button>
+<button onclick="order()">Sifariş</button>
+
+</div>
+
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/map.js"></script>
+
+<script>
+
+let from=document.getElementById("from")
+let to=document.getElementById("to")
+
+autocomplete(from,document.getElementById("fromList"))
+autocomplete(to,document.getElementById("toList"))
+
+function myLoc(){
+ navigator.geolocation.getCurrentPosition(p=>{
+  map.setView([p.coords.latitude,p.coords.longitude],15)
+ })
+}
+
+async function order(){
+
+ await fetch("/api/order",{
+  method:"POST",
+  headers:{"Content-Type":"application/json"},
+  body:JSON.stringify({
+   passenger_id:1,
+   pickup_lat:40.4093,
+   pickup_lng:49.8671,
+   drop_lat:40.38,
+   drop_lng:49.89
+  })
+ })
+
+ alert("Sifariş göndərildi")
+
+}
+
+</script>
+
+</body>
+</html>

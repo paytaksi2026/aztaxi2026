@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>AzTaxi Admin</title>
+</head>
+<body>
+
+<h2>Admin Panel</h2>
+
+<button onclick="drivers()">Drivers</button>
+<button onclick="orders()">Orders</button>
+
+<pre id="data"></pre>
+
+<script>
+
+async function drivers(){
+
+ let r=await fetch("/api/drivers")
+ let j=await r.json()
+
+ document.getElementById("data").textContent=JSON.stringify(j,null,2)
+
+}
+
+async function orders(){
+
+ let r=await fetch("/api/orders")
+ let j=await r.json()
+
+ document.getElementById("data").textContent=JSON.stringify(j,null,2)
+
+}
+
+</script>
+
+</body>
+</html>
